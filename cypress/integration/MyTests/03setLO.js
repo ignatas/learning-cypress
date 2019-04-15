@@ -1,4 +1,4 @@
-const apikey = 'a18a2544-c6fb-4877-be5a-3fdad40819fd';
+const apikey = Cypress.env('apiKey1');
 let limitOrderId;
 let singleLO;
 //--Preparation--//
