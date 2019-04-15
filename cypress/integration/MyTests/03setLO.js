@@ -48,23 +48,28 @@ it('autorized user1 place LO BTCUSD Sell', function() {
         expect(limit.status).to.eq(200);
         expect(limit.body).to.have.property('Id');
         limitOrderId = limit.body.Id;
-        
-        cy.request('/orderbooks');
-        cy.request('/orderbooks'); 
-        cy.request('/orderbooks'); // wait ~2-3 sec
-        cy.request({
-            url: '/orders/'+limitOrderId, //check limit order info  by ID
-            headers: {'api-key': apikey},
-        })
-        .then((ordersbyid) => {expect(ordersbyid.status).to.eq(200);
-            expect(ordersbyid.body).to.have.property('Id').eq(limitOrderId);
-            expect(ordersbyid.body).to.have.property('Status').eq('Placed'); //The LO is in orderbook
-            expect(ordersbyid.body).to.have.property('AssetPairId').eq(singleLO.AssetPairId); //The assetpair is correct
-            expect(ordersbyid.body).to.have.property('Price').eq(singleLO.Price);//The price is correct
-            if (singleLO.OrderAction === 'Sell') {expect(ordersbyid.body).to.have.property('Volume').eq(-singleLO.Volume)} //The volume and direction is correct
-        })
+        waitFor()           
     })
-
+    //--Checking LO info--//
+    function waitFor(){ // wait ~2-3 sec
+    cy.request({
+        url: '/orders/'+limitOrderId, //check limit order info  by ID
+        headers: {'api-key': apikey},
+        failOnStatusCode: false
+    })
+    .then((ordersbyid) => {
+        if (ordersbyid.status === 404) {waitFor()}
+        else {
+        expect(ordersbyid.status).to.eq(200);
+        expect(ordersbyid.body).to.have.property('Id').eq(limitOrderId);
+        expect(ordersbyid.body).to.have.property('Status').eq('Placed'); //The LO is in orderbook
+        expect(ordersbyid.body).to.have.property('AssetPairId').eq(singleLO.AssetPairId); //The assetpair is correct
+        expect(ordersbyid.body).to.have.property('Price').eq(singleLO.Price);//The price is correct
+        if (singleLO.OrderAction === 'Sell') {expect(ordersbyid.body).to.have.property('Volume').eq(-singleLO.Volume)} //The volume and direction is correct
+        return
+        }    
+    })
+    }
     //--Checking if balance is reserved by the placed order--//                    
     cy
     .request({
