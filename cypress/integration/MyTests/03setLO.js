@@ -4,8 +4,8 @@ let singleLO;
 let retryDuration = 0;
 
 //--Preparation--//
-it('autorized user1 check BTC balance', function () {
-
+before('autorized user1 check BTC balance', function () {
+    cy.fixture('singleLO').then((data) => { singleLO = data });
     cy
         .request({
             url: '/wallets', // check balance for reserved amount
@@ -34,10 +34,6 @@ it('autorized user1 check BTC balance', function () {
 })
 
 //--Single limit order placement test--//
-it('nn', function () {
-    cy.fixture('singleLO').then((data) => { singleLO = data })
-})
-
 it('autorized user1 place LO BTCUSD Sell', function () {
 
     cy
