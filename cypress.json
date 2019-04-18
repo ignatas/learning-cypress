@@ -2,5 +2,11 @@
     "baseUrl": "https://hft-api-test.lykkex.net/api/",
     "env": {
         "apiKey1": "a18a2544-c6fb-4877-be5a-3fdad40819fd"
-    }
+    },
+    "reporter": "mocha-allure-reporter",
+    "reporterOptions": {
+        "mochaFile": "/results/test-output.xml",
+        "toConsole": true
+        
+      }
 }
