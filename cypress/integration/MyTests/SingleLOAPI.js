@@ -1,14 +1,10 @@
 //is service alive at all?
-describe('Cheching if the service isAlive', function () {
-    it('successfully loads', function () {
-        cy
-            .request('/isAlive')
-            .then((response) => {
-                expect(response.status).to.eq(200);
-                expect(response.body).to.have.property('isDebug', false)
-            })
+
+    before('successfully loads', function () {
+        cy.isAlive()
+        .should('equal', false);
     })
-})
+
 
 //does autorization service work?
 const apikey = Cypress.env('apiKey1');
@@ -50,7 +46,7 @@ describe('Checkinig the autorization service', function () {
 })
 
 //making single limit order
-describe('Cheching single LO', function () {
+describe('Checking single LO', function () {
     
     let limitOrderId;
     let singleLO;
