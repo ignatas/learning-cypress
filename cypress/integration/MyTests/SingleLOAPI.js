@@ -1,9 +1,9 @@
 //is service alive at all?
 
-    before('successfully loads', function () {
-        cy.isAlive()
+before('successfully loads', function () {
+    cy.isAlive()
         .should('equal', false);
-    })
+})
 
 
 //does autorization service work?
@@ -47,7 +47,7 @@ describe('Checkinig the autorization service', function () {
 
 //making single limit order
 describe('Checking single LO', function () {
-    
+
     let limitOrderId;
     let singleLO;
     let retryDuration = 0;
@@ -55,28 +55,11 @@ describe('Checking single LO', function () {
     //--Preparation--//
     before('autorized user1 check BTC balance', function () {
         cy.fixture('singleLO').then((data) => { singleLO = data });
-        cy
-            .request({
-                url: '/wallets', // check balance for reserved amount
-                headers: { 'api-key': apikey },
-                failOnStatusCode: false
-            })
+
+        cy.getWallets(apikey)
             .then((wallets) => {
-                expect(wallets.status).to.eq(200);
                 wallets.body.forEach(asset => {
-                    if (asset.AssetId === 'BTC' && asset.Reserved > 0) //if there are placed orders that reserve some amount
-                    {
-                        cy
-                            .request({
-                                url: '/Orders', // cancell all orders
-                                method: 'DELETE',
-                                headers: { 'api-key': apikey },
-                            })
-                            .then((orders) => {
-                                expect(orders.status).to.eq(200)
-                            }) //unnecessary. just flag
-                    }
-                    // if (asset.AssetId ==='BTC'){ expect(asset.Reserved).to.eq(0) }
+                    if (asset.AssetId === 'BTC' && asset.Reserved > 0) { cy.killAllOrders(apikey) }
                 })
             })
     })

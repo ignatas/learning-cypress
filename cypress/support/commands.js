@@ -23,12 +23,32 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-Cypress.Commands.add("isAlive", () => {
+Cypress.Commands.add('isAlive', () => {
     cy
         .request('/isAlive')
         .then((response) => {
             //expect(response.status).to.eq(200);
             //expect(response.body).to.have.property('isDebug', true)
             return response.body.isDebug
+        })
+})
+
+Cypress.Commands.add('killAllOrders', (apikey) => {
+    cy
+        .request({
+            url: '/Orders', // cancell all orders
+            method: 'DELETE',
+            headers: { 'api-key': apikey },
+        })
+})
+
+Cypress.Commands.add('getWallets', (apikey) => {
+    cy
+        .request({
+            url: '/wallets', // get user's balance
+            headers: { 'api-key': apikey },
+        })
+        .then((wallets) => {
+            return wallets
         })
 })
