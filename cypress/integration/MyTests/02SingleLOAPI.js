@@ -2,10 +2,10 @@
 
 before('successfully loads', function () {
     cy.isAlive()
-    .then((alive) => { 
-        expect(alive.status).to.eq(200)
-        expect(alive.body).to.have.property('isDebug').eq(false)
-     })
+        .then((alive) => {
+            expect(alive.status).to.eq(200)
+            expect(alive.body).to.have.property('isDebug').eq(false)
+        })
 })
 const apikey = Cypress.env('apiKey1'); // <-- User1 autorization token is loaded
 let limitOrderId;
@@ -17,12 +17,13 @@ describe('Checking single LO post', function () {
     //--Preparation--//
     before('user1 - check BTC balance', function () {
         cy.fixture('singleLO').then((data) => { singleLO = data });
-
+        //--clearing the environment if necessary--//
         cy.getWallets(apikey)
             .then((wallets) => {
-                wallets.body.forEach(asset => {
-                    if (asset.AssetId === 'BTC' && asset.Reserved > 0) { cy.killAllOrders(apikey) }
-                })
+                let asset = wallets.body.filter(a => a.AssetId == 'BTC');
+                expect(asset.length).to.eq(1)
+                expect(asset[0].Balance).to.be.greaterThan(singleLO.Volume) //there is enough balance to place the order
+                if (asset[0].Reserved > 0) { cy.killAllOrders(apikey) }
             })
     })
 
@@ -69,7 +70,7 @@ describe('Checking single LO post', function () {
 })
 
 //--The single limit order cancelation test--//
-describe('Checking single LO post', function () {
+describe('Checking single LO cancel', function () {
     before('user1 - cancel the LO', function () {
         cy.cancelById(apikey, limitOrderId)
             .then((cancel) => {
@@ -79,9 +80,9 @@ describe('Checking single LO post', function () {
     it('user1 - check if the LO is cancelled', function () {
         cy.getWallets(apikey)
             .then((wallets) => {
-                wallets.body.forEach(asset => {
-                    if (asset.AssetId === 'BTC') { expect(asset.Reserved).to.eq(0) }
-                })
+                let asset = wallets.body.filter(a => a.AssetId == 'BTC');
+                expect(asset.length).to.eq(1)                
+                expect(asset[0].Reserved).to.eq(0) //the balance is not reserved by the order
             })
         cy.wait(2000)
         cy.getById(apikey, limitOrderId)
