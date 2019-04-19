@@ -1,0 +1,57 @@
+{
+  "body": {
+    "Id": "d6cef56e-38ba-43f5-bb2a-faff0eb7aeec",
+    "Status": "Placed",
+    "AssetPairId": "BTCCHF",
+    "Volume": -1.23456789,
+    "Price": 15000,
+    "RemainingVolume": -1.23456789,
+    "LastMatchTime": null,
+    "CreatedAt": "2019-04-19T13:27:42.043+00:00",
+    "Type": "Limit",
+    "LowerLimitPrice": null,
+    "LowerPrice": null,
+    "UpperLimitPrice": null,
+    "UpperPrice": null
+  },
+  "headers": {
+    "server": "nginx/1.10.3",
+    "date": "Fri, 19 Apr 2019 13:27:42 GMT",
+    "content-type": "application/json; charset=utf-8",
+    "transfer-encoding": "chunked",
+    "connection": "close",
+    "request-context": "appId=cid-v1:2cdacad1-69c4-4492-b232-ac00b97a5eaa"
+  },
+  "status": 200,
+  "statusText": "OK",
+  "isOkStatusCode": true,
+  "requestHeaders": {
+    "api-key": "a18a2544-c6fb-4877-be5a-3fdad40819fd",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+    "accept": "*/*",
+    "accept-encoding": "gzip, deflate"
+  },
+  "duration": 127,
+  "allRequestResponses": [
+    {
+      "Request Body": null,
+      "Request Headers": {
+        "api-key": "a18a2544-c6fb-4877-be5a-3fdad40819fd",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate"
+      },
+      "Request URL": "https://hft-api-test.lykkex.net/api/Orders/d6cef56e-38ba-43f5-bb2a-faff0eb7aeec",
+      "Response Body": "{\"Id\":\"d6cef56e-38ba-43f5-bb2a-faff0eb7aeec\",\"Status\":\"Placed\",\"AssetPairId\":\"BTCCHF\",\"Volume\":-1.23456789,\"Price\":15000.0,\"RemainingVolume\":-1.23456789,\"LastMatchTime\":null,\"CreatedAt\":\"2019-04-19T13:27:42.043+00:00\",\"Type\":\"Limit\",\"LowerLimitPrice\":null,\"LowerPrice\":null,\"UpperLimitPrice\":null,\"UpperPrice\":null}",
+      "Response Headers": {
+        "server": "nginx/1.10.3",
+        "date": "Fri, 19 Apr 2019 13:27:42 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "close",
+        "request-context": "appId=cid-v1:2cdacad1-69c4-4492-b232-ac00b97a5eaa"
+      },
+      "Response Status": 200
+    }
+  ]
+}
