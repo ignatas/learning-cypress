@@ -3,3 +3,4 @@ cypress/screenshots/
 cypress/videos/
 cypress/support/
 allure-results/
+cypress/fixtures/response.json

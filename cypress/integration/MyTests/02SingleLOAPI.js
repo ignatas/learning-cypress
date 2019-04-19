@@ -36,25 +36,24 @@ describe('Checking single LO post', function () {
                 expect(limit.body).to.have.property('Id');
                 limitOrderId = limit.body.Id;
                 waitFor()
+                cy.fixture('response').then((get) => {
+                    expect(get.status).to.eq(200)
+                    expect(get.body).to.have.property('Id').eq(limitOrderId);
+                    expect(get.body).to.have.property('Status').eq('Placed'); //The LO is cancelled
+                    expect(get.body).to.have.property('AssetPairId').eq(singleLO.AssetPairId); //The assetpair is correct
+                    expect(get.body).to.have.property('Price').eq(singleLO.Price);//The price is correct
+                    if (singleLO.OrderAction === 'Sell') { expect(get.body).to.have.property('Volume').eq(-singleLO.Volume) } //The volume and direction is correct 
+                    });
             })
         //--Checking LO info--//
 
         function waitFor() { // wait ~2-3 sec
-            cy.request({
-                url: '/orders/' + limitOrderId, //check limit order info  by ID
-                headers: { 'api-key': apikey },
-                failOnStatusCode: false
-            })
+            cy.getById(apikey, limitOrderId)
                 .then((ordersbyid) => {
                     retryDuration = retryDuration + parseInt(ordersbyid.duration);
                     if (ordersbyid.status === 404) { expect(retryDuration).to.be.lessThan(2000); waitFor() } // <-- added duration check here for less than 1 seconds loop working
                     else {
-                        expect(ordersbyid.status).to.eq(200);
-                        expect(ordersbyid.body).to.have.property('Id').eq(limitOrderId);
-                        expect(ordersbyid.body).to.have.property('Status').eq('Placed'); //The LO is in orderbook
-                        expect(ordersbyid.body).to.have.property('AssetPairId').eq(singleLO.AssetPairId); //The assetpair is correct
-                        expect(ordersbyid.body).to.have.property('Price').eq(singleLO.Price);//The price is correct
-                        if (singleLO.OrderAction === 'Sell') { expect(ordersbyid.body).to.have.property('Volume').eq(-singleLO.Volume) } //The volume and direction is correct
+                        cy.writeFile('/cypress/fixtures/response.json', ordersbyid)
                         return
                     }
                 })

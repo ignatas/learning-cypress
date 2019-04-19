@@ -74,6 +74,7 @@ Cypress.Commands.add('cancelById', (apikey, limitOrderId) => {
             url: '/Orders/' + limitOrderId, // cancell the order
             method: 'DELETE',
             headers: { 'api-key': apikey },
+            failOnStatusCode: false
         })
         .then((response) => {
             return response
@@ -86,6 +87,7 @@ Cypress.Commands.add('getById', (apikey, limitOrderId) => {
             url: '/Orders/' + limitOrderId, // get the order from history
             method: 'GET',
             headers: { 'api-key': apikey },
+            failOnStatusCode: false
         })
         .then((response) => {
             return response
