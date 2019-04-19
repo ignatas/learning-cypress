@@ -61,11 +61,11 @@ describe('Checking single LO post', function () {
         }
         //--Checking if balance is reserved by the placed order--//                    
         cy.getWallets(apikey)
-            .then((wallets) => {
-                wallets.body.forEach(asset => {
-                    if (asset.AssetId === 'BTC') { expect(asset.Reserved).to.eq(singleLO.Volume) }
-                })
-            })
+        .then((wallets) => {
+            let asset = wallets.body.filter(a => a.AssetId == 'BTC');
+            expect(asset.length).to.eq(1)                
+            expect(asset[0].Reserved).to.eq(singleLO.Volume) //the balance is reserved by the order
+        })
     })
 })
 
