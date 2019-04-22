@@ -9,8 +9,8 @@ before('successfully LimitOrderads', function () {
             expect(alive.status).to.eq(200)
             expect(alive.body).to.have.property('isDebug').eq(false)
         })
-        cy.fixture('users').then((data)=>{apikey = data[0].apikey})
-        cy.fixture('sellLimitOrder').then((data) => { sellLimitOrder = data })
+        cy.fixture('users').then((data)=>{apikey = data[0].apikey})// <-- User1 autorization token is loaded
+        cy.fixture('sellLimitOrder').then((data) => { sellLimitOrder = data })// <-- Limit Order request body is loaded
 })
 
 //making single limit order
@@ -25,7 +25,7 @@ describe('Checking single LimitOrder post', function () {
                 let asset = wallets.body.filter(a => a.AssetId == 'BTC');
                 expect(asset.length).to.eq(1)
                 expect(asset[0].Balance).to.be.greaterThan(sellLimitOrder.Volume) //there is enough balance to place the order
-                if (asset[0].Reserved > 0) { cy.killAlLimitOrderrders(apikey) }
+                if (asset[0].Reserved > 0) { cy.killAllOrders(apikey) }
             })
     })
 
@@ -37,7 +37,7 @@ describe('Checking single LimitOrder post', function () {
                 expect(limit.status).to.eq(200);
                 expect(limit.body).to.have.property('Id');
                 limitOrderId = limit.body.Id;
-                waitFor()
+                cy.getOrderById(apikey, limitOrderId)
                 cy.fixture('response').then((get) => {
                     expect(get.status).to.eq(200)
                     expect(get.body).to.have.property('Id').eq(limitOrderId);
@@ -49,17 +49,7 @@ describe('Checking single LimitOrder post', function () {
             })
         //--Checking LimitOrder info--//
 
-        function waitFor() { // wait ~2-3 sec
-            cy.getOrderById(apikey, limitOrderId)
-                .then((ordersbyid) => {
-                    retryDuration = retryDuration + parseInt(ordersbyid.duration);
-                    if (ordersbyid.status === 404) { expect(retryDuration).to.be.lessThan(2000); waitFor() } // <-- added duration check here for less than 1 seconds LimitOrderop working
-                    else {
-                        cy.writeFile('/cypress/fixtures/response.json', ordersbyid)
-                        return
-                    }
-                })
-        }
+        
         //--Checking if balance is reserved by the placed order--//                    
         cy.getWallets(apikey)
         .then((wallets) => {
