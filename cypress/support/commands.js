@@ -24,72 +24,48 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 Cypress.Commands.add('isAlive', () => {
-    cy
-        .request('/isAlive')
-        .then((response) => {
-            return response
-        })
+    return cy.request('/isAlive')        
 })
 
 Cypress.Commands.add('killAllOrders', (apikey) => {
-    cy
-        .request({
+    return cy.request({
             url: '/Orders', // cancell all orders
             method: 'DELETE',
             headers: { 'api-key': apikey },
         })
-        .then((response) => {
-            return response
-        })
 })
 
 Cypress.Commands.add('getWallets', (apikey) => {
-    cy
-        .request({
+    return cy.request({
             url: '/wallets', // get user's balance
             headers: { 'api-key': apikey },
             failOnStatusCode: false
         })
-        .then((response) => {
-            return response
-        })
 })
 
-Cypress.Commands.add('postLO', (apikey, body) => {
-    cy
-        .request({
+Cypress.Commands.add('postLimitOrder', (apikey, body) => {
+    return cy.request({
             url: '/orders/v2/limit', // place limit order
             headers: { 'api-key': apikey },
             method: 'POST',
             body: body
         })
-        .then((response) => {
-            return response
-        })
 })
 
-Cypress.Commands.add('cancelById', (apikey, limitOrderId) => {
-    cy
-        .request({
+Cypress.Commands.add('cancelOrderById', (apikey, limitOrderId) => {
+    return cy.request({
             url: '/Orders/' + limitOrderId, // cancell the order
             method: 'DELETE',
             headers: { 'api-key': apikey },
             failOnStatusCode: false
         })
-        .then((response) => {
-            return response
-        })
 })
 
-Cypress.Commands.add('getById', (apikey, limitOrderId) => {
-    cy
-        .request({
+Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
+    return cy.request({
             url: '/Orders/' + limitOrderId, // get the order from history
             method: 'GET',
             headers: { 'api-key': apikey },
             failOnStatusCode: false
-        })
-        .then((response) => {
-            return response
         })
 })

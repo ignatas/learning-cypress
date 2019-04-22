@@ -1,0 +1,16 @@
+[
+    {
+        "user": 1,
+        "nickname": "user1",
+        "login": "email1@test.com",
+        "password": "123456",
+        "apikey": "a18a2544-c6fb-4877-be5a-3fdad40819fd"
+    },
+    {
+        "user": 2,
+        "nickname": "user2",
+        "login": "email2@test.com",
+        "password": "123456",
+        "apikey": "7e326aaf-0f47-4616-ae22-d8eb8177be99"
+    }
+]
