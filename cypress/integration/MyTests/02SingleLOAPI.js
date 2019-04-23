@@ -9,8 +9,8 @@ before('successfully LimitOrderads', function () {
             expect(alive.status).to.eq(200)
             expect(alive.body).to.have.property('isDebug').eq(false)
         })
-        cy.fixture('users').then((data)=>{apikey = data[0].apikey})// <-- User1 autorization token is loaded
-        cy.fixture('sellLimitOrder').then((data) => { sellLimitOrder = data })// <-- Limit Order request body is loaded
+    cy.fixture('users').then((data) => { apikey = data[0].apikey })// <-- User1 autorization token is loaded
+    cy.fixture('sellLimitOrder').then((data) => { sellLimitOrder = data })// <-- Limit Order request body is loaded
 })
 
 //making single limit order
@@ -18,7 +18,7 @@ describe('Checking single LimitOrder post', function () {
 
     //--Preparation--//
     before('user1 - check BTC balance', function () {
-        
+
         //--clearing the environment if necessary--//
         cy.getWallets(apikey)
             .then((wallets) => {
@@ -37,26 +37,27 @@ describe('Checking single LimitOrder post', function () {
                 expect(limit.status).to.eq(200);
                 expect(limit.body).to.have.property('Id');
                 limitOrderId = limit.body.Id;
-                cy.getOrderById(apikey, limitOrderId)
-                cy.fixture('response').then((get) => {
+                cy.getOrderById(apikey, limitOrderId) 
+                //cy.fixture('getOrderByIdResponse'). 
+                .then((get) => { // <- works
                     expect(get.status).to.eq(200)
                     expect(get.body).to.have.property('Id').eq(limitOrderId);
                     expect(get.body).to.have.property('Status').eq('Placed'); //The LimitOrder is cancelled
                     expect(get.body).to.have.property('AssetPairId').eq(sellLimitOrder.AssetPairId); //The assetpair is correct
                     expect(get.body).to.have.property('Price').eq(sellLimitOrder.Price);//The price is correct
                     if (sellLimitOrder.OrderAction === 'Sell') { expect(get.body).to.have.property('Volume').eq(-sellLimitOrder.Volume) } //The volume and direction is correct 
-                    });
+                });
             })
         //--Checking LimitOrder info--//
 
-        
+
         //--Checking if balance is reserved by the placed order--//                    
         cy.getWallets(apikey)
-        .then((wallets) => {
-            let asset = wallets.body.filter(a => a.AssetId == 'BTC');
-            expect(asset.length).to.eq(1)                
-            expect(asset[0].Reserved).to.eq(sellLimitOrder.Volume) //the balance is reserved by the order
-        })
+            .then((wallets) => {
+                let asset = wallets.body.filter(a => a.AssetId == 'BTC');
+                expect(asset.length).to.eq(1)
+                expect(asset[0].Reserved).to.eq(sellLimitOrder.Volume) //the balance is reserved by the order
+            })
     })
 })
 
@@ -72,18 +73,19 @@ describe('Checking single LimitOrder cancel', function () {
         cy.getWallets(apikey)
             .then((wallets) => {
                 let asset = wallets.body.filter(a => a.AssetId == 'BTC');
-                expect(asset.length).to.eq(1)                
+                expect(asset.length).to.eq(1)
                 expect(asset[0].Reserved).to.eq(0) //the balance is not reserved by the order
             })
-        cy.wait(2000)
+        cy.wait(3000)
         cy.getOrderById(apikey, limitOrderId)
-            .then((get) => {
-                expect(get.status).to.eq(200)
-                expect(get.body).to.have.property('Id').eq(limitOrderId);
-                expect(get.body).to.have.property('Status').eq('Cancelled'); //The LimitOrder is cancelled
-                expect(get.body).to.have.property('AssetPairId').eq(sellLimitOrder.AssetPairId); //The assetpair is correct
-                expect(get.body).to.have.property('Price').eq(sellLimitOrder.Price);//The price is correct
-                if (sellLimitOrder.OrderAction === 'Sell') { expect(get.body).to.have.property('Volume').eq(-sellLimitOrder.Volume) } //The volume and direction is correct
-            })
+        //cy.fixture('getOrderByIdResponse').
+        .then((get) => {
+            expect(get.status).to.eq(200)
+            expect(get.body).to.have.property('Id').eq(limitOrderId);
+            expect(get.body).to.have.property('Status').eq('Cancelled'); //The LimitOrder is cancelled
+            expect(get.body).to.have.property('AssetPairId').eq(sellLimitOrder.AssetPairId); //The assetpair is correct
+            expect(get.body).to.have.property('Price').eq(sellLimitOrder.Price);//The price is correct
+            if (sellLimitOrder.OrderAction === 'Sell') { expect(get.body).to.have.property('Volume').eq(-sellLimitOrder.Volume) } //The volume and direction is correct
+        })
     })
 })

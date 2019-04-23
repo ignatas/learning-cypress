@@ -63,7 +63,6 @@ Cypress.Commands.add('cancelOrderById', (apikey, limitOrderId) => {
 
 let retryDuration = 0;
 Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
-    let retryDuration
     cy.request({
         url: '/Orders/' + limitOrderId, // get the order from history
         method: 'GET',
@@ -72,15 +71,16 @@ Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
     })
         .then((ordersbyid) => {
             retryDuration = retryDuration + parseInt(ordersbyid.duration);
-            if (retryDuration < 5000) {
+            if (retryDuration < 3000) {
                 if (ordersbyid.status === 404) {
-                    
+                    console.log(retryDuration)
                     cy.getOrderById(apikey, limitOrderId)
-                } 
+                }
                 else {
-                    cy.writeFile('/cypress/fixtures/response.json', ordersbyid)                   
+                    //cy.writeFile('/cypress/fixtures/getOrderByIdResponse.json', ordersbyid) <-- no need to use
                 }
             }
-            else { console.log('FATAL ERROR !!!') }
+            else { expect(retryDuration).to.be.lessThan(3000) }
+
         })
 })
