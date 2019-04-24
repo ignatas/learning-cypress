@@ -21,8 +21,8 @@ let product = [
 product.forEach(product => {
     it('positive : ' + product.description, () => {
         cy.visit('https://store.google.com/us/collection/accessories_wall')
-        cy.log(timeouts.newPage)
-        cy.log(timeouts.onPage)
+        //cy.log(timeouts.newPage)
+        //cy.log(timeouts.onPage)
         cy.get('a[ng-href="/product/' + product.productName + '"]', { timeout: 20000 }).click()
 
         cy.get('div[class="bar-component price-and-button-container"]', { timeout: 20000 })
