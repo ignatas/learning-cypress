@@ -2,7 +2,7 @@
 
 class pageSearch {
 
-    searchProductAPI(product) {
+    searchProductAPI(product) { //find out how to work with json object here
         cy.visit('https://store.google.com/us/search?q=' + product.name + '&hl=en-US')
         cy.get('div[class="results-container"]').should('be.visible')
         .contains(product.name)
@@ -10,7 +10,7 @@ class pageSearch {
         .click()
     }
 
-    searchProductUI(product) {
+    searchProductUI(product) {// temporary not used
         cy.get('.header-search-icon > .highlightable > svg', { timeout: 20000 })
             .click()
         cy.get('.quantumWizAutocompleteInputText')
