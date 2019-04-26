@@ -1,6 +1,13 @@
 {
     "baseUrl": "https://hft-api-test.lykkex.net/api/",
     "env": {
-        "wait": 3000
-    }
+        "wait": 3000   
+    },
+    "reporter": "mocha-allure-reporter",
+    "reporterOptions": {
+        "mochaFile": "/results/test-output.xml",
+        "toConsole": true
+        
+      }
 }
+
