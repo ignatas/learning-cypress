@@ -1,3 +1,6 @@
 {
-    "baseUrl": "https://hft-api-test.lykkex.net/api/"
+    "baseUrl": "https://hft-api-test.lykkex.net/api/",
+    "env": {
+        "wait": 3000
+    }
 }
