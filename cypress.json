@@ -1,7 +1,7 @@
 {
     "baseUrl": "https://hft-api-test.lykkex.net/api/",
     "env": {
-        "apiKey1": "a18a2544-c6fb-4877-be5a-3fdad40819fd"
+        "wait": 3000   
     },
     "reporter": "mocha-allure-reporter",
     "reporterOptions": {
@@ -10,3 +10,4 @@
         
       }
 }
+
