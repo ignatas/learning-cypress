@@ -23,3 +23,67 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('isAlive', () => {
+    return cy.request('/isAlive').then((alive) => { 
+        expect(alive.status).to.eq(200)
+        expect(alive.body).to.have.property('isDebug').eq(false)
+     }) 
+})
+
+Cypress.Commands.add('killAllOrders', (apikey) => {
+    return cy.request({
+        url: '/Orders', // cancell all orders
+        method: 'DELETE',
+        headers: { 'api-key': apikey },
+    })
+})
+
+Cypress.Commands.add('getWallets', (apikey) => {
+    return cy.request({
+        url: '/wallets', // get user's balance
+        headers: { 'api-key': apikey },
+        failOnStatusCode: false
+    })
+})
+
+Cypress.Commands.add('postLimitOrder', (apikey, body) => {
+    return cy.request({
+        url: '/orders/v2/limit', // place limit order
+        headers: { 'api-key': apikey },
+        method: 'POST',
+        body: body
+    })
+})
+
+Cypress.Commands.add('cancelOrderById', (apikey, limitOrderId) => {
+    return cy.request({
+        url: '/Orders/' + limitOrderId, // cancell the order
+        method: 'DELETE',
+        headers: { 'api-key': apikey },
+        failOnStatusCode: false
+    })
+})
+
+let retryDuration = 0;
+Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
+    cy.request({
+        url: '/Orders/' + limitOrderId, // get the order from history
+        method: 'GET',
+        headers: { 'api-key': apikey },
+        failOnStatusCode: false
+    })
+        .then((order) => {
+            retryDuration = retryDuration + parseInt(order.duration);
+            if (retryDuration < 3000) {
+                if (order.status === 404) {
+                    console.log(retryDuration)
+                    cy.getOrderById(apikey, limitOrderId)
+                }
+                else {
+                    //cy.writeFile('/cypress/fixtures/getOrderByIdResponse.json', ordersbyid) <-- no need to use
+                }
+            }
+            else { expect(retryDuration).to.be.lessThan(3000) }
+
+        })
+})
