@@ -29,7 +29,7 @@ product.forEach(product => {
         commonPageActions.getProductPrice().then((text) => { product.price = text })//save the price
 
         commonPageActions.addProductToCart() //buy the product
-        
+
         if (product.colors.length > 1) //additional steps for multiple colors
         {
             let color = chance.pickone(product.colors)
@@ -42,6 +42,9 @@ product.forEach(product => {
         pageCart.getProductQuantity().then((text) => { expect(text).to.eq("1") })//check : the only one item in the cart
 
         pageCart.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the total price is correct
+
+    })
+    after('cleaning', () => {
         //postprocessing ------------------------------------------------------------
         pageCart.removeProduct() //clear the cart for new test
             .should('exist')//check : if the product is removed

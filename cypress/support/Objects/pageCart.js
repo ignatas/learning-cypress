@@ -16,10 +16,9 @@ class pageCart {
     }
 
     setProductQuantity() {
-
         cy.get('select[class="item-qty-selector"]').then((selector) => {
             let qnt = Chance().integer({ min: 1, max: selector[0].length })
-            cy.get('select[class="item-qty-selector"]').select(`${qnt}`).should('have.value', `${qnt}`)
+            cy.get('select[class="item-qty-selector"]').select(`${qnt}`).should('have.value', `${qnt}`)            
         })
     }
 
@@ -29,7 +28,8 @@ class pageCart {
 
     removeProduct() {
         cy.get('button[class="cart-remove-button pull-right"]', { timeout: 20000 }).should('be.visible')
-            .click({force: true})//remove product from the cart
+        //.scrollTo(0, 0)   
+        .click()//remove product from the cart
         return cy.get('div[class="your-cart-is-empty"]', { timeout: 20000 })
     }
 
