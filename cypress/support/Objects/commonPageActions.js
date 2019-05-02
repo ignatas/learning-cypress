@@ -1,9 +1,9 @@
 import Chance from 'chance'
 class commonPageActions {
-    get storeUrl(){ return Cypress.env('storeUrl')}
-    
+    get storeUrl() { return Cypress.env('storeUrl') }
+
     pickRandomProduct() {
-       // let storeUrl = Cypress.env('storeUrl')
+
         cy.request('https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json')
             .then((response) => {
                 let allProducts = response.body.products
@@ -13,10 +13,8 @@ class commonPageActions {
 
                 cy.visit(`${this.storeUrl}/search?q=${product.display_name}&hl=en-US`)
                 cy.get(`input[value="${product.url}"]`).should('exist')
-                    //.contains(product.url)
                     .parent()
                     .click()
-               // return product
             })
     }
 

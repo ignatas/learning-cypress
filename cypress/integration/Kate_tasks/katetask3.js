@@ -2,17 +2,19 @@ import Chance from 'chance'
 import pageShop from "../../support/Objects/pageShop"
 import pageCart from "../../support/Objects/pageCart"
 import commonPageActions from "../../support/Objects/commonPageActions"
-import pageSearch from '../../support/Objects/pageSearch';
+//import pageSearch from '../../support/Objects/pageSearch';
 
 
 before('preparation : add random product to cart', () => {
 
     commonPageActions.pickRandomProduct()
     commonPageActions.addProductToCart()
+    cy.wait(2000)
 
 })
 
 it('positive : product qnt change', () => {
+
     cy.log('GIVEN : random product is added to the cart')
     pageCart.getProductQuantity().then((quantity) => { expect(quantity).to.eq("1") })//check : the only one item in the cart
     
@@ -45,13 +47,9 @@ it('positive : product qnt change', () => {
 
 })
 
-after('cleaning', () => {
+/*after('cleaning', () => {
     //postprocessing ------------------------------------------------------------    
     cy.visit('https://store.google.com/us/cart?hl=en-US')
     pageCart.removeProduct() //clear the cart for new test
         .should('exist')//check : if the product is removed
-})
-
-// GIVEN User in the Cart
-// WHEN User changes qnty
-// THEN Total price is changed
+})*/
