@@ -1,30 +1,23 @@
 import Chance from 'chance'
 class commonPageActions {
-
+    get storeUrl(){ return Cypress.env('storeUrl')}
+    
     pickRandomProduct() {
-        let product = {
-            "name": "",
-            "url": ""
-        };
+       // let storeUrl = Cypress.env('storeUrl')
         cy.request('https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json')
             .then((response) => {
+                let allProducts = response.body.products
+                let products = allProducts.filter(product => product.images.length == 1)
+                let product = Chance().pickone(products)
+                product.display_name = (product.display_name.indexOf(' -') > 0) ? product.display_name.substring(0, product.display_name.indexOf(' -')) : product.display_name
 
-                let number = 1// Chance().integer({ min: 0, max: response.body.products.length }) //random product #
-                if (response.body.products[number].images.length == 1) {
-                    product.name = response.body.products[number].display_name
-                    product.url = response.body.products[number].url
-                    if (product.name.indexOf(' -') > 0) { product.name = product.name.substring(0, product.name.indexOf(' -')) }
-                }
-                
-                    cy.visit('https://store.google.com/us/search?q=' + product.name + '&hl=en-US')
-                    cy.get('div[class="results-container"]').should('be.visible')
-                    .contains(product.name)
+                cy.visit(`${this.storeUrl}/search?q=${product.display_name}&hl=en-US`)
+                cy.get(`input[value="${product.url}"]`).should('exist')
+                    //.contains(product.url)
                     .parent()
                     .click()
-               
-                //else (this.pickRandomProduct())
+               // return product
             })
-        return product
     }
 
     getProductPrice() {
@@ -41,10 +34,3 @@ class commonPageActions {
 
 } export default new commonPageActions()
 
-/*
-выбрать случайный элемент из апишки без цвета --- пока не умеет определять цвет
-выбрать любой случайный элемент из апишки --- закинуть из таска 1
-
-кликнуть на кнопку купить -- добавляет в корзину
-
-*/

@@ -3,7 +3,8 @@
     "env": {
         "wait": 3000,
         "login": "admin",
-        "password": "admin"
+        "password": "admin",
+        "storeUrl": "https://store.google.com/us"
     },
     "reporter": "mocha-allure-reporter",
     "reporterOptions": {

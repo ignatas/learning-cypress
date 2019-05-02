@@ -1,11 +1,11 @@
 //import commonPageActions from "../commonPageActions";
 
-class pageSearch {
+class pageSearch extends commonPageActions {
 
     searchProductAPI(product) { //find out how to work with json object here
-        cy.visit('https://store.google.com/us/search?q=' + product.name + '&hl=en-US')
+        cy.visit(`${this.storeUrl}/search?q=${product.display_name}&hl=en-US`)
         cy.get('div[class="results-container"]').should('be.visible')
-        .contains(product.name)
+        .contains(product.display_name)
         .parent()
         .click()
     }
