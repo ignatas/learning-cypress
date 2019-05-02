@@ -1,6 +1,6 @@
-//import commonPageActions from "../commonPageActions";
+import commonPageActions from "../Objects/commonPageActions"
 
-class pageShop {
+class pageShop /*extends commonPageActions*/ {
 
     selectProductByName(product) { //Selection from 1st page hardcoded for now
         return cy.get('a[ng-href="' + product.url + '"]', { timeout: 20000 })

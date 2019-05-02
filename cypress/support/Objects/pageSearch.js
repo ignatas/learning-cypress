@@ -1,4 +1,4 @@
-import commonPageActions from "../../support/Objects/commonPageActions"
+import commonPageActions from "../Objects/commonPageActions"
 
 class pageSearch extends commonPageActions {
 

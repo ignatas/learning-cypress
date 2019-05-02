@@ -1,4 +1,6 @@
 import Chance from 'chance'
+import commonPageActions from "../../support/Objects/commonPageActions"
+
 describe('task1', () => {
     let product = {
         "name": "",
@@ -15,7 +17,7 @@ describe('task1', () => {
     })
 
     it('positive : search the existing product', () => {
-        cy.visit('store.google.com/us/?hl=en-US&countryRedirect=true')
+        cy.visit(`${commonPageActions.storeUrl}/?hl=en-US&countryRedirect=true`)
         cy.get('.header-search-icon > .highlightable > svg', { timeout: 20000 })
             .click()
         cy.get('.quantumWizAutocompleteInputText')

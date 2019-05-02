@@ -22,7 +22,7 @@ let product = [
 
 product.forEach(product => {
     it('positive : ' + product.description, () => {
-        cy.visit('https://store.google.com/us/collection/accessories_wall')
+        cy.visit(`${commonPageActions.storeUrl}/collection/accessories_wall`)
 
         pageShop.selectProductByName(product).click()
 

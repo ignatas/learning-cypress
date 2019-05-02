@@ -1,6 +1,7 @@
 import Chance from 'chance'
+import commonPageActions from "../Objects/commonPageActions"
 
-class pageCart {
+class pageCart /*extends commonPageActions*/ {
 
     getProductColor(color) {
         return cy.get('div[class="cart-lineitem-title pull-left"]', { timeout: 20000 }).contains(color)
@@ -28,9 +29,8 @@ class pageCart {
 
     removeProduct() {
         cy.get('button[class="cart-remove-button pull-right"]', { timeout: 20000 }).should('be.visible')
-            //.scrollTo(0, 0)   
             .click()//remove product from the cart
         return cy.get('div[class="your-cart-is-empty"]', { timeout: 20000 })
     }
-    
+
 } export default new pageCart()
