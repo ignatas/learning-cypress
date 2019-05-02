@@ -22,8 +22,10 @@ let product = [
 
 product.forEach(product => {
     it('positive : ' + product.description, () => {
-        cy.visit(`${commonPageActions.storeUrl}/collection/accessories_wall`)
+        cy.log('GIVEN : 2 products' + product)
 
+        cy.visit(`${commonPageActions.storeUrl}/collection/accessories_wall`)
+        cy.log('WHEN : User buys the product')
         pageShop.selectProductByName(product).click()
 
         commonPageActions.getProductPrice().then((text) => { product.price = text })//save the price
@@ -32,11 +34,12 @@ product.forEach(product => {
 
         if (product.colors.length > 1) //additional steps for multiple colors
         {
+            cy.log('Product with color selection')
             let color = chance.pickone(product.colors)
             pageShop.selectProductColor(color).click()
             pageCart.getProductColor(color).should('exist')//check: the color is correct
         }
-
+        cy.log('THEN : The product is added to the cart')
         pageCart.getProductPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the product price is correct
 
         pageCart.getProductQuantity().then((text) => { expect(text).to.eq("1") })//check : the only one item in the cart

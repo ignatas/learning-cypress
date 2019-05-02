@@ -9,7 +9,7 @@ before('preparation : add random product to cart', () => {
 
     commonPageActions.pickRandomProduct()
     commonPageActions.addProductToCart()
-    cy.wait(2000)
+    cy.wait(Cypress.env("wait"))
 
 })
 
@@ -20,7 +20,7 @@ it('positive : product qnt change', () => {
 
     cy.log('WHEN : user changes product quantity')
     pageCart.setProductQuantity()//change qty
-    cy.wait(2000)    
+    cy.wait(Cypress.env("wait"))    
 
     cy.log('THEN : Total price is changed as product_price * product_quantity')
     cy.visit(`${commonPageActions.storeUrl}/cart?hl=en-US`)
