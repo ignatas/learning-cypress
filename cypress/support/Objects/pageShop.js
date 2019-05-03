@@ -11,6 +11,7 @@ class pageShop /*extends commonPageActions*/ {
             .contains(color)
             .parent().parent()
             .find('div[class="mqn-button mqn-button--hairline ng-binding ng-scope mdc-ripple-upgraded"]', { timeout: 20000 })
+            .click()
     }
 
 } export default new pageShop()

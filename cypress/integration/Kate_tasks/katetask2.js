@@ -36,7 +36,7 @@ describe('task2 - add product to cart', () => {
             {
                 cy.log('Product with color selection')
                 let color = chance.pickone(product.colors)
-                pageShop.selectProductColor(color).click()
+                pageShop.selectProductColor(color)
                 pageCart.getProductColor(color).should('exist')//check: the color is correct
             }
             cy.log('THEN : The product is added to the cart')
