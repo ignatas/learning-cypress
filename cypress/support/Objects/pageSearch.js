@@ -5,9 +5,9 @@ class pageSearch extends commonPageActions {
     searchProductAPI(product) { //find out how to work with json object here
         cy.visit(`${this.storeUrl}/search?q=${product.display_name}&hl=en-US`)
         cy.get('div[class="results-container"]').should('be.visible')
-        .contains(product.display_name)
-        .parent()
-        .click()
+            .contains(product.display_name)
+            .parent()
+            .click()
     }
 
     searchProductUI(product) {// temporary not used
@@ -17,8 +17,8 @@ class pageSearch extends commonPageActions {
             .type(product.name + '{enter}')
         // check if the product is really found
         cy.get('input[value="' + product.url + '"]', { timeout: 20000 }).should('exist')
-        .parent()
-        .click()
+            .parent()
+            .click()
     }
 
 } export default new pageSearch()

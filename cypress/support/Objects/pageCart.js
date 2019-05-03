@@ -1,5 +1,5 @@
 import Chance from 'chance'
-import commonPageActions from "../Objects/commonPageActions"
+import commonPageActions from "./commonPageActions"
 
 class pageCart /*extends commonPageActions*/ {
 

@@ -8,7 +8,7 @@ class commonPageActions {
             .then((response) => {
                 let allProducts = response.body.products
                 let products = allProducts.filter(product => product.images.length == 1)
-                let product = Chance().pickone(products)
+                let product = products[1]//Chance().pickone(products)
                 product.display_name = (product.display_name.indexOf(' -') > 0) ? product.display_name.substring(0, product.display_name.indexOf(' -')) : product.display_name
 
                 cy.visit(`${this.storeUrl}/search?q=${product.display_name}&hl=en-US`)

@@ -1,15 +1,16 @@
 import Chance from 'chance'
 import commonPageActions from "../../support/Objects/commonPageActions"
 
-describe('task1', () => {
+describe('task1 - find random product', () => {
     let product = {
         "name": "",
         "url": ""
     };
     before('', () => {
+        cy.clearCookies()
         cy.request('https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json')
             .then((response) => {
-                let number = Chance().integer({ min: 0, max: response.body.products.length }) //random product #
+                let number = 1//Chance().integer({ min: 0, max: response.body.products.length }) //random product #
                 product.name = response.body.products[number].display_name
                 product.url = response.body.products[number].url
                 if (product.name.indexOf(' -') > 0) { product.name = product.name.substring(0, product.name.indexOf(' -')) }
