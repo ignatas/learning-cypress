@@ -1,7 +1,9 @@
 {
     "baseUrl": "https://hft-api-test.lykkex.net/api/",
     "env": {
-        "wait": 3000   
+        "wait": 3000
+        "login": "admin",
+        "password": "admin"
     },
     "reporter": "mocha-allure-reporter",
     "reporterOptions": {
