@@ -1,14 +1,13 @@
-//import Chance from 'chance'
-//import pageShop from "../../support/Objects/pageShop"
-import pageCart from "../../support/Objects/pageCart"
-import commonPageActions from "../../support/Objects/commonPageActions"
-//import pageSearch from '../../support/Objects/pageSearch';
+import pageCart from "../../pageObjects/pageCart"
+import pageProduct from "../../pageObjects/pageProduct"
+import productService from "../../services/productService"
 
 describe('task3 - change product quantity in the cart', () => {
     before('preparation : add random product to cart', () => {
         cy.clearCookies()
-        commonPageActions.pickRandomProduct()
-        commonPageActions.addProductToCart()
+        productService.pickRandomProduct('test3')
+        //commonPageActions.pickRandomProduct()
+        pageProduct.addProductToCart()
         cy.wait(Cypress.env("wait"))
 
     })
@@ -23,7 +22,7 @@ describe('task3 - change product quantity in the cart', () => {
         cy.wait(Cypress.env("wait"))
 
         cy.log('THEN : Total price is changed as product_price * product_quantity')
-        cy.visit(`${commonPageActions.storeUrl}/cart?hl=en-US`)
+        pageCart.openCartPage()
         pageCart.getProductQuantity().then((productQuantity) => {
             let cart = {
                 "quantity": 0,
@@ -45,7 +44,7 @@ describe('task3 - change product quantity in the cart', () => {
 
     after('cleaning', () => {
         //postprocessing ------------------------------------------------------------    
-        cy.visit(`${commonPageActions.storeUrl}/cart?hl=en-US`)
+        pageCart.openCartPage()
         pageCart.removeProduct() //clear the cart for new test
             .should('exist')//check : if the product is removed    
     })

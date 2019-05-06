@@ -1,42 +1,45 @@
-import Chance from 'chance'
-import pageShop from "../../support/Objects/pageShop"
-import pageCart from "../../support/Objects/pageCart"
-import commonPageActions from "../../support/Objects/commonPageActions"
+import pageCart from "../../pageObjects/pageCart"
+import pageProduct from "../../pageObjects/pageProduct"
+import productService from "../../services/productService"
+import pageSearch from "../../pageObjects/pageSearch"
+
 describe('task2 - add product to cart', () => {
     let product = [
         {
-            "name": "Google Pixel Buds",
+            "display_name": "Google Pixel Buds",
             "url": "/product/google_pixel_buds",
             "description": "add to cart - product with color selection",
             "price": "",
             "colors": ["Just Black", "Clearly White"]
         },
         {
-            "name": "Google Pixel Stand",
+            "display_name": "Google Pixel Stand",
             "url": "/product/pixel_stand",
             "description": "add to cart - product without color selection",
             "price": "",
             "colors": ["White"]
         }
     ]; //hardcoded 2 test cases
+
     beforeEach('', () => { cy.clearCookies() })
+
     product.forEach(product => {
         it('positive : ' + product.description, () => {
             cy.log('GIVEN : 2 products' + product)
 
-            cy.visit(`${commonPageActions.storeUrl}/collection/accessories_wall`)
+            productService.searchProductAPI(product)
             cy.log('WHEN : User buys the product')
-            pageShop.selectProductByName(product).click()
+            pageSearch.pickProductFromSearchResults(product)
 
-            commonPageActions.getProductPrice().then((text) => { product.price = text })//save the price
+            pageProduct.getProductPrice().then((text) => { product.price = text })//save the price
 
-            commonPageActions.addProductToCart() //buy the product
+            pageProduct.addProductToCart() //buy the product
 
             if (product.colors.length > 1) //additional steps for multiple colors
             {
                 cy.log('Product with color selection')
                 let color = chance.pickone(product.colors)
-                pageShop.selectProductColor(color)
+                pageProduct.selectProductColor(color)
                 pageCart.getProductColor(color).should('exist')//check: the color is correct
             }
             cy.log('THEN : The product is added to the cart')
@@ -50,9 +53,6 @@ describe('task2 - add product to cart', () => {
     });
 
     afterEach('cleaning', () => {
-        //postprocessing ------------------------------------------------------------
-        //pageCart.removeProduct() //clear the cart for new test
-        // .should('exist')//check : if the product is removed
         cy.clearCookies()
     })
 })

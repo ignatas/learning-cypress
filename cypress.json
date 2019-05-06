@@ -4,7 +4,8 @@
         "wait": 3000,
         "login": "admin",
         "password": "admin",
-        "storeUrl": "https://store.google.com/us"
+        "storeUrl": "https://store.google.com/us",
+        "productsURL": "https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json"
     },
     "reporter": "mocha-allure-reporter",
     "reporterOptions": {
