@@ -26,17 +26,17 @@ describe('task3 - change product quantity in the cart', () => {
         pageCart.getProductQuantity().then((productQuantity) => {
             let cart = {
                 "quantity": 0,
-                "single": 0,
-                "total": 0
+                "singleProductPrice": 0,
+                "totalPrice": 0
             }
             cart.quantity = productQuantity
             pageCart.getProductPrice().then((productPrice) => {
-                cart.single = productPrice
+                cart.singleProductPrice = productPrice
                 pageCart.getTotalPrice().then((totalPrice) => {
-                    cart.total = totalPrice
-                    cart.single = cart.single.substring(1, cart.single.indexOf('.') + 3).replace(',', '')
-                    cart.total = cart.total.substring(1, cart.total.indexOf('.') + 3).replace(',', '')
-                    expect((cart.quantity * cart.single).toFixed(2)).to.eq((cart.total * 1).toFixed(2)) //check : the total price is correct after quanity change
+                    cart.totalPrice = totalPrice
+                    cart.singleProductPrice = cart.singleProductPrice.substring(1, cart.singleProductPrice.indexOf('.') + 3).replace(',', '')
+                    cart.totalPrice = cart.totalPrice.substring(1, cart.totalPrice.indexOf('.') + 3).replace(',', '')
+                    expect((cart.quantity * cart.singleProductPrice).toFixed(2)).to.eq((cart.totalPrice * 1).toFixed(2)) //check : the total price is correct after quanity change
                 })
             })
         })
@@ -45,7 +45,6 @@ describe('task3 - change product quantity in the cart', () => {
     after('cleaning', () => {
         //postprocessing ------------------------------------------------------------    
         pageCart.openCartPage()
-        pageCart.removeProduct() //clear the cart for new test
-            .should('exist')//check : if the product is removed    
+        pageCart.removeProduct() //clear the cart for new test              
     })
 })

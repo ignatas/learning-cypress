@@ -7,6 +7,7 @@
         "storeUrl": "https://store.google.com/us",
         "productsURL": "https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json"
     },
+    "defaultCommandTimeout": 20000,
     "reporter": "mocha-allure-reporter",
     "reporterOptions": {
         "mochaFile": "/results/test-output.xml",

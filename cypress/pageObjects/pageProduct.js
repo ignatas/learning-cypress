@@ -1,19 +1,19 @@
 class pageProduct {
 
     getProductPrice() {
-        return cy.get('div[class="bar-component price-and-button-container"]', { timeout: 20000 })
-            .find('span[class="is-price"]', { timeout: 20000 })// find element with product price
+        return cy.get('div[class="bar-component price-and-button-container"]')
+            .find('span[class="is-price"]')// find element with product price
             .invoke('text') //take the price
     }
 
     addProductToCart() {
-        cy.get('div[class="bar-component price-and-button-container"]', { timeout: 20000 })
+        cy.get('div[class="bar-component price-and-button-container"]')
             .contains('Buy')
             .click()
     }
 
     selectProductColor(color) {
-        return cy.get('div[class="mqn-lobby-swatch__card__headline ng-binding ng-scope"]', { timeout: 20000 })
+        return cy.get('div[class="mqn-lobby-swatch__card__meta"]')
             .contains(color)
             .parent().parent().contains('Add to cart')
             .click()

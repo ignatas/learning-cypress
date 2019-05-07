@@ -21,11 +21,11 @@ describe('task2 - add product to cart', () => {
         }
     ]; //hardcoded 2 test cases
 
-    beforeEach('', () => { cy.clearCookies() })
+    beforeEach(() => { cy.clearCookies() })
 
     product.forEach(product => {
         it('positive : ' + product.description, () => {
-            cy.log('GIVEN : 2 products' + product)
+            cy.log('GIVEN : product' + product)
 
             productService.searchProductAPI(product)
             cy.log('WHEN : User buys the product')
@@ -36,7 +36,7 @@ describe('task2 - add product to cart', () => {
             pageProduct.addProductToCart() //buy the product
 
             if (product.colors.length > 1) //additional steps for multiple colors
-            {
+            {                
                 cy.log('Product with color selection')
                 let color = chance.pickone(product.colors)
                 pageProduct.selectProductColor(color)

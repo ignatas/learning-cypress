@@ -7,15 +7,15 @@ class pageCart {
     }
 
     getProductColor(color) {
-        return cy.get('div[class="cart-lineitem-title pull-left"]', { timeout: 20000 }).contains(color)
+        return cy.get('div[class="cart-lineitem-title pull-left"]').contains(color)
     }
 
     getProductPrice() {
-        return cy.get('div[class="cart-price-bottom-padding text-right"]', { timeout: 20000 }).invoke('text')
+        return cy.get('div[class="cart-price-bottom-padding text-right"]').invoke('text')
     }
 
     getProductQuantity() {
-        return cy.get('div[class="item-quantity cart-price-bottom-padding"]', { timeout: 20000 })
+        return cy.get('div[class="item-quantity cart-price-bottom-padding"]')
             .find('option[selected="true"]').invoke('text')
     }
 
@@ -27,13 +27,13 @@ class pageCart {
     }
 
     getTotalPrice() {
-        return cy.get('span[class="roboto-header-text-6 float-right"]', { timeout: 20000 }).invoke('text')
+        return cy.get('span[class="roboto-header-text-6 float-right"]').invoke('text')
     }
 
     removeProduct() {
-        cy.get('button[class="cart-remove-button pull-right"]', { timeout: 20000 }).should('be.visible')
+        cy.get('button[class="cart-remove-button pull-right"]').should('be.visible')
             .click()//remove product from the cart
-        return cy.get('div[class="your-cart-is-empty"]', { timeout: 20000 })
+        cy.get('div[class="your-cart-is-empty"]').should('exist')
     }
 
 } export default new pageCart()
