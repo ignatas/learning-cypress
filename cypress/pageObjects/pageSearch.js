@@ -13,7 +13,7 @@ class pageSearch {
     }
 
     searchProductUI(product) {
-        cy.get('.header-search-icon > .highlightable > svg', { timeout: 20000 })
+        cy.get('.header-search-icon > .highlightable > svg')
             .click()
         cy.get('.quantumWizAutocompleteInputText')
             .type(product.name + '{enter}')

@@ -1,4 +1,3 @@
-import Chance from 'chance'
 import productService from "../services/productService"
 
 class pageCart {
@@ -19,11 +18,9 @@ class pageCart {
             .find('option[selected="true"]').invoke('text')
     }
 
-    setProductQuantity() {
-        cy.get('select[class="item-qty-selector"]').then((selector) => {
-            let qnt = Chance().integer({ min: 1, max: selector[0].length })
-            cy.get('select[class="item-qty-selector"]').select(`${qnt}`).should('have.value', `${qnt}`)
-        })
+    setProductQuantity(productQuantity) {
+        cy.get('select[class="item-qty-selector"]').select(`${productQuantity}`)
+            .should('have.value', `${productQuantity}`)
     }
 
     getTotalPrice() {
@@ -31,9 +28,11 @@ class pageCart {
     }
 
     removeProduct() {
-        cy.get('button[class="cart-remove-button pull-right"]').should('be.visible')
+        cy.get('button[class="cart-remove-button pull-right"]')
+            .should('be.visible')
             .click()//remove product from the cart
-        cy.get('div[class="your-cart-is-empty"]').should('exist')
+        cy.get('div[class="your-cart-is-empty"]')
+            .should('exist')
     }
 
 } export default new pageCart()

@@ -1,6 +1,7 @@
 import pageCart from "../../pageObjects/pageCart"
 import pageProduct from "../../pageObjects/pageProduct"
 import productService from "../../services/productService"
+import Chance from 'chance'
 
 describe('task3 - change product quantity in the cart', () => {
     before('preparation : add random product to cart', () => {
@@ -18,7 +19,11 @@ describe('task3 - change product quantity in the cart', () => {
         pageCart.getProductQuantity().then((quantity) => { expect(quantity).to.eq("1") })//check : the only one item in the cart
 
         cy.log('WHEN : user changes product quantity')
-        pageCart.setProductQuantity()//change qty
+        cy.get('select[class="item-qty-selector"]').then((selector) => {
+            let qty = Chance().integer({ min: 1, max: selector[0].length })
+            pageCart.setProductQuantity(qty)//change qty
+        })
+
         cy.wait(Cypress.env("wait"))
 
         cy.log('THEN : Total price is changed as product_price * product_quantity')
