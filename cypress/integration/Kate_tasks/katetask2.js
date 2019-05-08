@@ -23,7 +23,7 @@ describe('task2 - add product to cart', () => {
                 .then(products => {
                     product = chance.pickone(products[index])
                     cy.log('GIVEN : product' + product.display_name)
-                    cy.searchProductAPI(product)
+                    pageSearch.searchProductAPI(product.display_name)
 
                     cy.log('WHEN : User buys the product')
                     pageSearch.pickProductFromSearchResults(product)

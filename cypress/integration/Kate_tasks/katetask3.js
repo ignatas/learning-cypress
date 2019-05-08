@@ -11,7 +11,7 @@ describe('task3 - change product quantity in the cart', () => {
             products = products.filter(product => (product.images.length == 1))
             let product = products[0] //Chance().pickone(products) // - hardcoded to 100% pass
             cy.log(product.url)
-            cy.searchProductAPI(product) //jet search results by api directly
+            pageSearch.searchProductAPI(product.display_name) //jet search results by api directly
             pageSearch.pickProductFromSearchResults(product) // check if the product is in the results and pick
         })
 

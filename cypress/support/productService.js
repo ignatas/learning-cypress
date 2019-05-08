@@ -8,12 +8,6 @@ Cypress.Commands.add('getProductsList', () => {
 })
 })
 
-Cypress.Commands.add('searchProductAPI', (product) => {
-    cy.getStoreUrl().then((storeUrl) => {
-        cy.visit(`${storeUrl}/search?q=${product.display_name}&hl=en-US`)
-    })
-})
-
 Cypress.Commands.add('getStoreUrl', () => {
     return Cypress.env('storeUrl')
 })

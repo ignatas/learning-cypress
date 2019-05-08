@@ -15,12 +15,17 @@ class pageSearch {
             cy.visit(`${url}/?hl=en-US&countryRedirect=true`)
         })
     }
+    searchProductAPI(display_name) {
+        cy.getStoreUrl().then((storeUrl) => {
+            cy.visit(`${storeUrl}/search?q=${display_name}&hl=en-US`)
+        })
+    }
 
     searchProductUI(product) {
         cy.get('.header-search-icon > .highlightable > svg')
             .click()
         cy.get('.quantumWizAutocompleteInputText')
-            .type(product.name + '{enter}')
+            .type(product.display_name + '{enter}')
     }
 
 } export default new pageSearch()
