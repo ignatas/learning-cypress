@@ -19,12 +19,16 @@ class pageCart {
     }
 
     setProductQuantity(productQuantity) {
-        cy.get('select[class="item-qty-selector"]').select(`${productQuantity}`)
+        this.getItemQuantitySelector().select(`${productQuantity}`)
             .should('have.value', `${productQuantity}`)
     }
 
     getTotalPrice() {
         return cy.get('span[class="roboto-header-text-6 float-right"]').invoke('text')
+    }
+
+    getItemQuantitySelector(){
+        return cy.get('select[class="item-qty-selector"]')
     }
 
     removeProduct() {

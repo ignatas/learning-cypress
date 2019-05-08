@@ -12,41 +12,38 @@ let product = [
 ] // 2 testcases hardcode
 
 describe('task2 - add product to cart', () => {
-    
+
     beforeEach(() => {
-        cy.clearCookies()        
+        cy.clearCookies()
     })
 
     product.forEach((product, index) => {
         it('positive : ' + product.description, () => {
-            cy.fixture('products').then(products => {product = chance.pickone(products[index])
-            cy.log('GIVEN : product' + product) // - ??? doesnt log data ???
+            cy.fixture('products')
+                .then(products => {
+                    product = chance.pickone(products[index])
+                    cy.log('GIVEN : product' + product.display_name)
+                    cy.searchProductAPI(product)
 
-            cy.searchProductAPI(product)
-            cy.log('WHEN : User buys the product')
-            pageSearch.pickProductFromSearchResults(product)
+                    cy.log('WHEN : User buys the product')
+                    pageSearch.pickProductFromSearchResults(product)
+                    pageProduct.getProductPrice().then((text) => { product.price = text })//save the price
 
-            pageProduct.getProductPrice().then((text) => { product.price = text })//save the price
+                    let color = chance.pickone(product.colors)
+                    cy.log(color)
 
-            pageProduct.addProductToCart() //buy the product
+                    pageProduct.addProductToCart(product, color) //buy the product
+                    pageCart.getProductColor(color).should('exist')//check: the color is correct
+                    
+                    cy.log('THEN : The product is added to the cart')
+                    pageCart.getProductPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the product price is correct
 
-            if (product.colors.length > 1) //additional steps for multiple colors
-            {
-                cy.log('Product with color selection')
-                let color = chance.pickone(product.colors)
-                cy.log(color)
-                pageProduct.selectProductColor(color)
-                pageCart.getProductColor(color).should('exist')//check: the color is correct
-            }
-            else { cy.log('Product without color selection') }
-            cy.log('THEN : The product is added to the cart')
-            pageCart.getProductPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the product price is correct
+                    pageCart.getProductQuantity().then((text) => { expect(text).to.eq("1") })//check : the only one item in the cart
 
-            pageCart.getProductQuantity().then((text) => { expect(text).to.eq("1") })//check : the only one item in the cart
+                    pageCart.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the total price is correct
 
-            pageCart.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the total price is correct
-
-        })})
+                })
+        })
     });
 
     afterEach('cleaning', () => {

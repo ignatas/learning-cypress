@@ -15,24 +15,21 @@ describe('task3 - change product quantity in the cart', () => {
             pageSearch.pickProductFromSearchResults(product) // check if the product is in the results and pick
         })
 
-        pageProduct.addProductToCart()
-        cy.wait(Cypress.env("wait")) //wait for serverside cart update
-
+        pageProduct.clickBuy()        
     })
 
     it('positive : product qnt change', () => {
 
         cy.log('GIVEN : random product is added to the cart')
+        pageCart.getItemQuantitySelector().should('exist')
         pageCart.getProductQuantity().then((quantity) => { expect(quantity).to.eq("1") })//check : the only one item in the cart
 
         cy.log('WHEN : user changes product quantity')
-        cy.get('select[class="item-qty-selector"]').then((selector) => {
+        pageCart.getItemQuantitySelector().then((selector) => {
             let qty = Chance().integer({ min: 1, max: selector[0].length })
             pageCart.setProductQuantity(qty)//change qty
         })
-
-        cy.wait(Cypress.env("wait")) //wait for serverside cart update
-
+        
         cy.log('THEN : Total price is changed as product_price * product_quantity')
         pageCart.openCartPage()
         pageCart.getProductQuantity().then((productQuantity) => {
