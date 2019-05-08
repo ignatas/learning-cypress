@@ -2,30 +2,25 @@ import pageCart from "../../pageObjects/pageCart"
 import pageProduct from "../../pageObjects/pageProduct"
 import pageSearch from "../../pageObjects/pageSearch"
 import Chance from 'chance'
+let product = [
+    {
+        "description": "add to cart - product with color selection" // #1 
+    },
+    {
+        "description": "add to cart - product without color selection" // #2
+    }
+] // 2 testcases hardcode
 
 describe('task2 - add product to cart', () => {
-    let product = [
-        {
-            "display_name": "Bellroy Pixelbook Pen Clip",
-            "url": "/product/bellroy_pixelbook_pen_clip",
-            "description": "add to cart - product with color selection",
-            "price": "",
-            "colors": ["Black", "Caramel"]
-        },
-        {
-            "display_name": "Google Pixel Stand",
-            "url": "/product/pixel_stand",
-            "description": "add to cart - product without color selection",
-            "price": "",
-            "colors": ["White"]
-        }
-    ]; //rdcoded 2 test cases
+    
+    beforeEach(() => {
+        cy.clearCookies()        
+    })
 
-    beforeEach(() => { cy.clearCookies() })
-
-    product.forEach((product) => {
+    product.forEach((product, index) => {
         it('positive : ' + product.description, () => {
-            cy.log('GIVEN : product' + product)
+            cy.fixture('products').then(products => {product = chance.pickone(products[index])
+            cy.log('GIVEN : product' + product) // - ??? doesnt log data ???
 
             cy.searchProductAPI(product)
             cy.log('WHEN : User buys the product')
@@ -51,7 +46,7 @@ describe('task2 - add product to cart', () => {
 
             pageCart.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the total price is correct
 
-        })
+        })})
     });
 
     afterEach('cleaning', () => {
