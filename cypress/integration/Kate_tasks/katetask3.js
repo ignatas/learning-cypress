@@ -6,7 +6,7 @@ import Chance from 'chance'
 describe('task3 - change product quantity in the cart', () => {
     before('preparation : add random product to cart', () => {
         cy.clearCookies()
-        
+
         cy.getProductsList().then(products => {
             products = products.filter(product => (product.images.length == 1))
             let product = products[0] //Chance().pickone(products) // - hardcoded to 100% pass
@@ -15,7 +15,7 @@ describe('task3 - change product quantity in the cart', () => {
             pageSearch.pickProductFromSearchResults(product) // check if the product is in the results and pick
         })
 
-        pageProduct.clickBuy()        
+        pageProduct.clickBuy()
     })
 
     it('positive : product qnt change', () => {
@@ -26,26 +26,17 @@ describe('task3 - change product quantity in the cart', () => {
 
         cy.log('WHEN : user changes product quantity')
         pageCart.getItemQuantitySelector().then((selector) => {
-            let qty = Chance().integer({ min: 1, max: selector[0].length })
-            pageCart.setProductQuantity(qty)//change qty
-        })
-        
-        cy.log('THEN : Total price is changed as product_price * product_quantity')
-        pageCart.openCartPage()
-        pageCart.getProductQuantity().then((productQuantity) => {
-            let cart = {
-                "quantity": 0,
-                "singleProductPrice": 0,
-                "totalPrice": 0
-            }
-            cart.quantity = productQuantity
+            let productQuantity = Chance().integer({ min: 1, max: selector[0].length })
+            pageCart.setProductQuantity(productQuantity)//change qty
+
+            cy.log('THEN : Total price is changed as product_price * product_quantity')
+            pageCart.openCartPage()
             pageCart.getProductPrice().then((productPrice) => {
-                cart.singleProductPrice = productPrice
                 pageCart.getTotalPrice().then((totalPrice) => {
-                    cart.totalPrice = totalPrice
-                    cart.singleProductPrice = cart.singleProductPrice.substring(1, cart.singleProductPrice.indexOf('.') + 3).replace(',', '')
-                    cart.totalPrice = cart.totalPrice.substring(1, cart.totalPrice.indexOf('.') + 3).replace(',', '')
-                    expect((cart.quantity * cart.singleProductPrice).toFixed(2)).to.eq((cart.totalPrice * 1).toFixed(2)) //check : the total price is correct after quanity change
+                    productPrice = productPrice.substring(1, productPrice.indexOf('.') + 3).replace(',', '')
+                    totalPrice = totalPrice.substring(1, totalPrice.indexOf('.') + 3).replace(',', '')
+                   // check : the total price is correct after quanity change
+                    expect((productQuantity * productPrice).toFixed(2)).to.eq((totalPrice * 1).toFixed(2))
                 })
             })
         })

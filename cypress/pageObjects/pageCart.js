@@ -1,12 +1,16 @@
 class pageCart {
+     getItemQuantitySelector() {
+        return cy.get('select[class="item-qty-selector"]')
+    }
+
     openCartPage() {
         cy.getStoreUrl().then(url => {
             cy.visit(`${url}/cart?hl=en-US`)
         })
     }
 
-    getProductColor(color) {
-        return cy.get('div[class="cart-lineitem-title pull-left"]').contains(color)
+    getProductTitle(product) {
+        return cy.contains(product.display_name)
     }
 
     getProductPrice() {
@@ -25,10 +29,6 @@ class pageCart {
 
     getTotalPrice() {
         return cy.get('span[class="roboto-header-text-6 float-right"]').invoke('text')
-    }
-
-    getItemQuantitySelector(){
-        return cy.get('select[class="item-qty-selector"]')
     }
 
     removeProduct() {
