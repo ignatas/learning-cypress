@@ -6,7 +6,16 @@ class productService {
     get productsURL() { return Cypress.env('productsUrl') }
 
     getProductsList() {
-        return cy.request('https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json')
+        //return cy.request('https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json')
+        cy.request('https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json').then(response => {
+            let products = response.body.products
+            products = products.filter(product => (product.display_name.indexOf(' -') == -1))
+            return products
+        })
+        /*
+        let products = response.body.products
+            products = products.filter(product => (product.display_name.indexOf(' -') == -1))
+        */
     }
 
     pickRandomProduct(options) {
