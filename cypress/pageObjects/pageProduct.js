@@ -13,7 +13,7 @@ class pageProduct {
     }
 
     selectProductColor(color) {
-        return cy.get('div[class="mqn-lobby-swatch__card__meta"]')
+        cy.get('div[class="mqn-lobby-swatch__card__meta"]')
             .contains(color)
             .parent().parent().contains('Add to cart')
             .click()

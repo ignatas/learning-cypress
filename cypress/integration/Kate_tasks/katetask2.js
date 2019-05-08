@@ -6,11 +6,11 @@ import pageSearch from "../../pageObjects/pageSearch"
 describe('task2 - add product to cart', () => {
     let product = [
         {
-            "display_name": "Google Pixel Buds",
-            "url": "/product/google_pixel_buds",
+            "display_name": "Bellroy Pixelbook Pen Clip",
+            "url": "/product/bellroy_pixelbook_pen_clip",
             "description": "add to cart - product with color selection",
             "price": "",
-            "colors": ["Just Black", "Clearly White"]
+            "colors": ["Black", "Caramel"]
         },
         {
             "display_name": "Google Pixel Stand",
@@ -39,6 +39,8 @@ describe('task2 - add product to cart', () => {
             {                
                 cy.log('Product with color selection')
                 let color = chance.pickone(product.colors)
+                cy.log(color)
+                cy.wait(5000)
                 pageProduct.selectProductColor(color)
                 pageCart.getProductColor(color).should('exist')//check: the color is correct
             }
