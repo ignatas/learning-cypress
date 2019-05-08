@@ -1,7 +1,7 @@
 import pageCart from "../../pageObjects/pageCart"
 import pageProduct from "../../pageObjects/pageProduct"
-import productService from "../../services/productService"
 import pageSearch from "../../pageObjects/pageSearch"
+import Chance from 'chance'
 
 describe('task2 - add product to cart', () => {
     let product = [
@@ -19,15 +19,15 @@ describe('task2 - add product to cart', () => {
             "price": "",
             "colors": ["White"]
         }
-    ]; //hardcoded 2 test cases
+    ]; //rdcoded 2 test cases
 
     beforeEach(() => { cy.clearCookies() })
 
-    product.forEach(product => {
+    product.forEach((product) => {
         it('positive : ' + product.description, () => {
             cy.log('GIVEN : product' + product)
 
-            productService.searchProductAPI(product)
+            cy.searchProductAPI(product)
             cy.log('WHEN : User buys the product')
             pageSearch.pickProductFromSearchResults(product)
 
@@ -36,14 +36,14 @@ describe('task2 - add product to cart', () => {
             pageProduct.addProductToCart() //buy the product
 
             if (product.colors.length > 1) //additional steps for multiple colors
-            {                
+            {
                 cy.log('Product with color selection')
                 let color = chance.pickone(product.colors)
-                cy.log(color)                
+                cy.log(color)
                 pageProduct.selectProductColor(color)
                 pageCart.getProductColor(color).should('exist')//check: the color is correct
             }
-            else {cy.log('Product without color selection')}
+            else { cy.log('Product without color selection') }
             cy.log('THEN : The product is added to the cart')
             pageCart.getProductPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the product price is correct
 

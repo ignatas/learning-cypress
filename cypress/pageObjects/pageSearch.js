@@ -1,15 +1,19 @@
-import productService from "../services/productService"
-
 class pageSearch {
 
+    getProductByUrl(url) {
+        return cy.get(`input[value="${url}"]`)
+    }
+
     pickProductFromSearchResults(product) {
-        cy.get(`input[value="${product.url}"]`).should('exist')
+        this.getProductByUrl(product.url).should('exist')
             .parent()
             .click()
     }
 
     openSearchPage() {
-        cy.visit(`${productService.storeUrl}/?hl=en-US&countryRedirect=true`)
+        cy.getStoreUrl().then(url => {
+            cy.visit(`${url}/?hl=en-US&countryRedirect=true`)
+        })
     }
 
     searchProductUI(product) {

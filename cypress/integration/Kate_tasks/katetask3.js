@@ -1,15 +1,22 @@
 import pageCart from "../../pageObjects/pageCart"
 import pageProduct from "../../pageObjects/pageProduct"
-import productService from "../../services/productService"
+import pageSearch from "../../pageObjects/pageSearch"
 import Chance from 'chance'
 
 describe('task3 - change product quantity in the cart', () => {
     before('preparation : add random product to cart', () => {
         cy.clearCookies()
-        productService.pickRandomProduct('test3')
-        //commonPageActions.pickRandomProduct()
+        
+        cy.getProductsList().then(products => {
+            products = products.filter(product => (product.images.length == 1))
+            let product = products[0] //Chance().pickone(products) // - hardcoded to 100% pass
+            cy.log(product.url)
+            cy.searchProductAPI(product) //jet search results by api directly
+            pageSearch.pickProductFromSearchResults(product) // check if the product is in the results and pick
+        })
+
         pageProduct.addProductToCart()
-        cy.wait(Cypress.env("wait"))
+        cy.wait(Cypress.env("wait")) //wait for serverside cart update
 
     })
 
@@ -24,7 +31,7 @@ describe('task3 - change product quantity in the cart', () => {
             pageCart.setProductQuantity(qty)//change qty
         })
 
-        cy.wait(Cypress.env("wait"))
+        cy.wait(Cypress.env("wait")) //wait for serverside cart update
 
         cy.log('THEN : Total price is changed as product_price * product_quantity')
         pageCart.openCartPage()

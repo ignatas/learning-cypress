@@ -1,8 +1,8 @@
-import productService from "../services/productService"
-
 class pageCart {
     openCartPage() {
-        cy.visit(`${productService.storeUrl}/cart?hl=en-US`)
+        cy.getStoreUrl().then(url => {
+            cy.visit(`${url}/cart?hl=en-US`)
+        })
     }
 
     getProductColor(color) {
