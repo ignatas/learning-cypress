@@ -44,6 +44,7 @@ describe('task2 - add product to cart', () => {
                 pageProduct.selectProductColor(color)
                 pageCart.getProductColor(color).should('exist')//check: the color is correct
             }
+            else {cy.log('Product without color selection')}
             cy.log('THEN : The product is added to the cart')
             pageCart.getProductPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the product price is correct
 
