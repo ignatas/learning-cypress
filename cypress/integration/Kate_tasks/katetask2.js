@@ -31,16 +31,18 @@ describe('task2 - add product to cart', () => {
 
                     let color = chance.pickone(product.colors)
                     cy.log(color + '[ color is selected](http://e.com)')
-
-                    ProductPage.addProductToCart(product, color) //buy the product
+                    //buy the product
+                    ProductPage.addProductToCart(product, color)
+                    cy.log('check: the color is correct')
                     CartPage.getProductTitle(product.url).contains(color).should('exist')//check: the color is correct
 
                     cy.log('[THEN : The product is added to the cart](http://e.com)')
-                    CartPage.getProductPrice(product.url).then((text) => { expect(text).to.eq(product.price + '.00') })//check : the product price is correct
-
-                    CartPage.getProductQuantity(product.url).then((text) => { expect(text).to.eq("1") })//check : the only one item in the cart
-
-                    CartPage.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })//check : the total price is correct
+                    cy.log('check : the product price is correct')
+                    CartPage.getProductPrice(product.url).then((text) => { expect(text).to.eq(product.price + '.00') })
+                    cy.log('check : the only one item in the cart')
+                    CartPage.getProductQuantity(product.url).then((text) => { expect(text).to.eq("1") })
+                    cy.log('check : the total price is correct')
+                    CartPage.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })
 
                 })
         })

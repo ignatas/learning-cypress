@@ -16,18 +16,20 @@ describe('task3 - change product quantity in the cart', () => {
             product = products[0] //Chance().pickone(products) // - hardcoded to 100% pass
             cy.log(product.url + '[ is selected](http:/e.com)')
             SearchPage.searchProductAPI(product.display_name) //jet search results by api directly
-            SearchPage.pickProductFromSearchResultsByUrl(product.url) // check if the product is in the results and pick
+            // check if the product is in the results and pick the product
+            SearchPage.pickProductFromSearchResultsByUrl(product.url)
         })
-
+        //add product to the cart
         ProductPage.clickBuy()
     })
 
     it('positive : product qnt change', () => {
 
         cy.log(`[GIVEN : ${product.display_name} - product is added to the cart](http:/e.com)`)
+//check : the only one item in the cart
         CartPage.getItemQuantityDropdown(product.url).should('exist')
-        CartPage.getProductQuantity(product.url).then((quantity) => { expect(quantity).to.eq("1") })//check : the only one item in the cart
-
+        CartPage.getProductQuantity(product.url).then((quantity) => { expect(quantity).to.eq("1") })
+        
         cy.log('[WHEN : user changes product quantity](http:/e.com)')
         CartPage.getItemQuantityDropdown(product.url).then((selector) => {
             let productQuantity = Chance().integer({ min: 1, max: selector[0].length })
@@ -39,7 +41,7 @@ describe('task3 - change product quantity in the cart', () => {
                 CartPage.getTotalPrice().then((totalPrice) => {
                     productPrice = formatPrice(productPrice)
                     totalPrice = formatPrice(totalPrice)
-                    // check : the total price is correct after quanity change
+                    cy.log('check : the total price is correct after quanity change')
                     expect((productQuantity * productPrice).toFixed(2)).to.eq((totalPrice * 1).toFixed(2))
                 })
             })
@@ -47,6 +49,7 @@ describe('task3 - change product quantity in the cart', () => {
     })
 
     after('cleaning', () => {
-        CartPage.removeProduct(product.url) //clear the cart for new test              
+        //clear the cart for new test
+        CartPage.removeProduct(product.url)              
     })
 })
