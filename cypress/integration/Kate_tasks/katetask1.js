@@ -11,7 +11,7 @@ describe('task1 - find random product', () => {
             let product = Chance().pickone(products)
             cy.log(product.url)
             pageSearch.openSearchPage()  //visit the page                  
-            pageSearch.searchProductUI(product)  //open search and type product name
+            pageSearch.searchProductUI(product.display_name)  //open search and type product name
             pageSearch.getProductByUrl(product.url).should('exist')  // check if the product is in the results                
         })
     })

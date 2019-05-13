@@ -1,17 +1,22 @@
 class pageProduct {
 
-    getPriceAndButton() {
+    get priceAndButtonContainer() {
         return cy.get('div[class="bar-component price-and-button-container"]')
     }
 
+    getProductByColor(color) {
+        return cy.get('div[class="mqn-lobby-swatch__card__meta"]')
+            .contains(color)
+    }
+
     getProductPrice() {
-        return this.getPriceAndButton()
+        return this.priceAndButtonContainer
             .find('span[class="is-price"]')// find element with product price
             .invoke('text') //take the price
     }
 
     clickBuy() {
-        this.getPriceAndButton()
+        this.priceAndButtonContainer
             .contains('Buy')
             .click()
     }
@@ -28,8 +33,7 @@ class pageProduct {
     }
 
     selectProductColor(color) {
-        cy.get('div[class="mqn-lobby-swatch__card__meta"]')
-            .contains(color)
+        this.getProductByColor(color)
             .parent().parent().contains('Add to cart')
             .click()
     }

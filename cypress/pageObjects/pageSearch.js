@@ -4,8 +4,8 @@ class pageSearch {
         return cy.get(`input[value="${url}"]`)
     }
 
-    pickProductFromSearchResults(product) {
-        this.getProductByUrl(product.url).should('exist')
+    pickProductFromSearchResultsByUrl(url) {
+        this.getProductByUrl(url).should('exist')
             .parent()
             .click()
     }
@@ -21,11 +21,11 @@ class pageSearch {
         })
     }
 
-    searchProductUI(product) {
+    searchProductUI(display_name) {
         cy.get('.header-search-icon > .highlightable > svg')
             .click()
         cy.get('.quantumWizAutocompleteInputText')
-            .type(product.display_name + '{enter}')
+            .type(display_name + '{enter}')
     }
 
 } export default new pageSearch()
