@@ -1,4 +1,4 @@
-class pageProduct {
+class ProductPage {
 
     get priceAndButtonContainer() {
         return cy.get('div[class="bar-component price-and-button-container"]')
@@ -38,5 +38,5 @@ class pageProduct {
             .click()
     }
 
-} export default new pageProduct()
+} export default new ProductPage()
 

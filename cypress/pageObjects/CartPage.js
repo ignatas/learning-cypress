@@ -1,4 +1,4 @@
-class pageCart {
+class CartPage {
 
     getProductRowByUrl(url) {
         return cy.get('div[class="cart-items-row"]')
@@ -63,4 +63,4 @@ class pageCart {
             .should('exist')
     }
 
-} export default new pageCart()
+} export default new CartPage()

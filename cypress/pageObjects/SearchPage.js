@@ -1,4 +1,4 @@
-class pageSearch {
+class SearchPage {
 
     getProductByUrl(url) {
         return cy.get(`input[value="${url}"]`)
@@ -28,4 +28,4 @@ class pageSearch {
             .type(display_name + '{enter}')
     }
 
-} export default new pageSearch()
+} export default new SearchPage()
