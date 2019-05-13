@@ -8,10 +8,6 @@ Cypress.Commands.add('getProductsList', () => {
 })
 })
 
-Cypress.Commands.add('getStoreUrl', () => {
-    return Cypress.env('storeUrl')
-})
-
 Cypress.Commands.add('getProductsUrl', () => {
     return Cypress.env('productsUrl')
 })

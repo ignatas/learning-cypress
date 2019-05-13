@@ -1,4 +1,6 @@
-class SearchPage {
+import BasePage from "./BasePage"
+
+class SearchPage extends BasePage {
 
     getProductByUrl(url) {
         return cy.get(`input[value="${url}"]`)
@@ -9,19 +11,12 @@ class SearchPage {
             .parent()
             .click()
     }
-
-    openSearchPage() {
-        cy.getStoreUrl().then(url => {
-            cy.visit(`${url}/?hl=en-US&countryRedirect=true`)
-        })
-    }
-    searchProductAPI(display_name) {
-        cy.getStoreUrl().then((storeUrl) => {
-            cy.visit(`${storeUrl}/search?q=${display_name}&hl=en-US`)
-        })
+    
+    openSearchResults(display_name) {
+        cy.visit(`${this.storeUrl}/search?q=${display_name}&hl=en-US`)
     }
 
-    searchProductUI(display_name) {
+    searchProduct(display_name) {
         cy.get('.header-search-icon > .highlightable > svg')
             .click()
         cy.get('.quantumWizAutocompleteInputText')

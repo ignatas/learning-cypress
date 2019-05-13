@@ -1,4 +1,6 @@
-class ProductPage {
+import BasePage from "./BasePage"
+
+class ProductPage extends BasePage {
 
     get priceAndButtonContainer() {
         return cy.get('div[class="bar-component price-and-button-container"]')

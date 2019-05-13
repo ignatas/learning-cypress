@@ -1,4 +1,6 @@
-class CartPage {
+import BasePage from "./BasePage"
+
+class CartPage extends BasePage {
 
     getProductRowByUrl(url) {
         return cy.get('div[class="cart-items-row"]')
@@ -20,9 +22,7 @@ class CartPage {
     }
 
     openCartPage() {
-        cy.getStoreUrl().then(url => {
-            cy.visit(`${url}/cart?hl=en-US`)
-        })
+        cy.visit(`${this.storeUrl}/cart?hl=en-US`)
     }
 
     getProductTitle(url) {
