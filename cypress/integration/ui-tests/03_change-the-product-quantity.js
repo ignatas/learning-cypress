@@ -1,6 +1,6 @@
-import CartPage from "../../pageObjects/CartPage"
-import ProductPage from "../../pageObjects/ProductPage"
-import SearchPage from "../../pageObjects/SearchPage"
+import CartPage from "../../pageObjects/cart-page"
+import ProductPage from "../../pageObjects/product-page"
+import SearchPage from "../../pageObjects/search-page"
 import Chance from 'chance'
 let product
 

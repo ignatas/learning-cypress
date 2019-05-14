@@ -1,7 +1,7 @@
-import CartPage from "../../pageObjects/CartPage"
-import ProductPage from "../../pageObjects/ProductPage"
-import SearchPage from "../../pageObjects/SearchPage"
-import Chance from 'chance'
+import CartPage from "../../pageObjects/cart-page"
+import ProductPage from "../../pageObjects/product-page"
+import SearchPage from "../../pageObjects/search-page"
+import Сhance from 'chance'
 let product = [
     {
         "description": "add to cart - product with color selection" // #1 

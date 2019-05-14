@@ -1,5 +1,5 @@
-import SearchPage from "../../pageObjects/SearchPage"
-import ShopPage from "../../pageObjects/ShopPage"
+import SearchPage from "../../pageObjects/search-page"
+import ShopPage from "../../pageObjects/shop-page"
 import Chance from 'chance'
 
 describe('task1 - find random product', () => {
