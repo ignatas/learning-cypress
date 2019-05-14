@@ -19,25 +19,25 @@ pipeline {
         stage('tester a') {
           steps {
               
-           npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel
+           sh "npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel"
           }
         }
         stage('tester b') {
           steps {
               
-           npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel
+           sh "npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel"
           }
         }
         stage('tester c') {
           steps {
               
-           npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel
+           sh "npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel"
           }
         }
         stage('tester d') {
           steps {
               
-           npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel
+           sh "npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel"
           }
         }
 
@@ -45,7 +45,7 @@ pipeline {
         stage('tester e') {
           steps {
               
-           npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel
+           sh "npx cypress run --record --key c6a0355c-4706-45df-a0a3-51ff1614022b --parallel"
           }
         }
       }
