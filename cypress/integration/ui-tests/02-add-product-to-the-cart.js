@@ -21,7 +21,7 @@ describe('task2 - add product to cart', () => {
         it('positive : ' + product.description, () => {
             cy.fixture('products')
                 .then(products => {
-                    product = chance.pickone(products[index])
+                    product = Chance().pickone(products[index])
                     cy.log('[GIVEN : product = ](http://e.com)' + product.display_name)
                     SearchPage.openSearchResults(product.display_name)
 
@@ -29,7 +29,7 @@ describe('task2 - add product to cart', () => {
                     SearchPage.pickProductFromSearchResultsByUrl(product.url)
                     ProductPage.getProductPrice().then((price) => { product.price = price })//save the price
 
-                    let color = chance.pickone(product.colors)
+                    let color = Chance().pickone(product.colors)
                     cy.log(color + '[ color is selected](http://e.com)')
                     //buy the product
                     ProductPage.addProductToCart(product, color)
