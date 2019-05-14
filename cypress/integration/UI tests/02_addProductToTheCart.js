@@ -39,18 +39,18 @@ describe('task2 - add product to cart', () => {
 
                     cy.log('[THEN : The product is added to the cart](http://e.com)')
                     cy.log('check : the product price is correct')
-                    CartPage.getProductPrice(product.url).then((productPrice) => { 
-                        expect(productPrice).to.eq(product.price + '.00') 
+                    CartPage.getProductPrice(product.url).then((productPrice) => {
+                        expect(productPrice).to.eq(product.price + '.00')
                     })
-                    
+
                     cy.log('check : the only one item in the cart')
-                    CartPage.getProductQuantity(product.url).then((quantity) => { 
-                        expect(quantity).to.eq("1") 
+                    CartPage.getProductQuantity(product.url).then((quantity) => {
+                        expect(quantity).to.eq("1")
                     })
 
                     cy.log('check : the total price is correct')
-                    CartPage.getTotalPrice().then((totalPrice) => { 
-                        expect(totalPrice).to.eq(product.price + '.00') 
+                    CartPage.getTotalPrice().then((totalPrice) => {
+                        expect(totalPrice).to.eq(product.price + '.00')
                     })
 
                 })

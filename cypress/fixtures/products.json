@@ -5,21 +5,30 @@
             "url": "/product/bellroy_pixelbook_pen_clip",
             "description": "add to cart - product with color selection",
             "price": "",
-            "colors": ["Black", "Caramel"]
+            "colors": [
+                "Black",
+                "Caramel"
+            ]
         },
         {
             "display_name": "Bellroy Pixelbook Pen Clip",
             "url": "/product/bellroy_pixelbook_pen_clip",
             "description": "add to cart - product with color selection",
             "price": "",
-            "colors": ["Black", "Caramel"]
+            "colors": [
+                "Black",
+                "Caramel"
+            ]
         },
         {
             "display_name": "Bellroy Pixelbook Pen Clip",
             "url": "/product/bellroy_pixelbook_pen_clip",
             "description": "add to cart - product with color selection",
             "price": "",
-            "colors": ["Black", "Caramel"]
+            "colors": [
+                "Black",
+                "Caramel"
+            ]
         }
     ],
     [
@@ -28,21 +37,27 @@
             "url": "/product/pixel_stand",
             "description": "add to cart - product without color selection",
             "price": "",
-            "colors": ["White"]
+            "colors": [
+                "White"
+            ]
         },
         {
             "display_name": "Google Pixel Stand",
             "url": "/product/pixel_stand",
             "description": "add to cart - product without color selection",
             "price": "",
-            "colors": ["White"]
+            "colors": [
+                "White"
+            ]
         },
         {
             "display_name": "Google Pixel Stand",
             "url": "/product/pixel_stand",
             "description": "add to cart - product without color selection",
             "price": "",
-            "colors": ["White"]
+            "colors": [
+                "White"
+            ]
         }
     ]
 ]
