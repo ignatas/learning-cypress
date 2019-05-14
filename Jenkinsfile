@@ -2,8 +2,7 @@ pipeline {
     agent any
     // this stage runs end-to-end tests, and each agent uses the workspace
     // from the previous stage
-    stages {
-    stage('cypress parallel tests') {
+    stages {    
       stage('build') {
       steps {
         // there a few default environment variables on Jenkins
@@ -13,7 +12,7 @@ pipeline {
       }
     }
 
-      // https://jenkins.io/doc/book/pipeline/syntax/#parallel
+      stage('parallel') {
       parallel {
         // start several test jobs in parallel, and they all
         // will use Cypress Dashboard to load balance any found spec files
