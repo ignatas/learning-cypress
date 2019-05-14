@@ -62,11 +62,11 @@ class CartPage extends BasePage {
     getTotalPrice() {
         this.checkOutButton.should('be.visible')
         return this.subtotal
-        .should('exist')
-        .then((price) => {
-            //formating price to the number
-            return price.text().substring(1, price.text().indexOf('.') + 3).replace(',', '')
-        })
+            .should('exist')
+            .then((price) => {
+                //formating price to the number
+                return price.text().substring(1, price.text().indexOf('.') + 3).replace(',', '')
+            })
     }
 
     removeProduct(url) {

@@ -14,7 +14,11 @@ class ProductPage extends BasePage {
     getProductPrice() {
         return this.priceAndButtonContainer
             .find('span[class="is-price"]')// find element with product price
-            .invoke('text') //take the price
+            .should('exist')
+            .then((price) => {
+                //formating price to the number
+                return price.text().substring(1, price.text().length + 1).replace(',', '')
+            })
     }
 
     clickBuy() {

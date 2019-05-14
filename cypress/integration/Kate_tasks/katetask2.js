@@ -23,11 +23,11 @@ describe('task2 - add product to cart', () => {
                 .then(products => {
                     product = chance.pickone(products[index])
                     cy.log('[GIVEN : product = ](http://e.com)' + product.display_name)
-                    SearchPage.searchProductAPI(product.display_name)
+                    SearchPage.openSearchResults(product.display_name)
 
                     cy.log('[WHEN : User buys the product](http://e.com)')
                     SearchPage.pickProductFromSearchResultsByUrl(product.url)
-                    ProductPage.getProductPrice().then((text) => { product.price = text })//save the price
+                    ProductPage.getProductPrice().then((price) => { product.price = price })//save the price
 
                     let color = chance.pickone(product.colors)
                     cy.log(color + '[ color is selected](http://e.com)')
@@ -39,11 +39,19 @@ describe('task2 - add product to cart', () => {
 
                     cy.log('[THEN : The product is added to the cart](http://e.com)')
                     cy.log('check : the product price is correct')
-                    CartPage.getProductPrice(product.url).then((text) => { expect(text).to.eq(product.price + '.00') })
+                    CartPage.getProductPrice(product.url).then((productPrice) => { 
+                        expect(productPrice).to.eq(product.price + '.00') 
+                    })
+                    
                     cy.log('check : the only one item in the cart')
-                    CartPage.getProductQuantity(product.url).then((text) => { expect(text).to.eq("1") })
+                    CartPage.getProductQuantity(product.url).then((quantity) => { 
+                        expect(quantity).to.eq("1") 
+                    })
+
                     cy.log('check : the total price is correct')
-                    CartPage.getTotalPrice().then((text) => { expect(text).to.eq(product.price + '.00') })
+                    CartPage.getTotalPrice().then((totalPrice) => { 
+                        expect(totalPrice).to.eq(product.price + '.00') 
+                    })
 
                 })
         })
