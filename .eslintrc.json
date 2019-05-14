@@ -4,6 +4,9 @@
         "es6": true,
         "node": true
     },
+    "plugins": [
+        "cypress"
+    ],
     "extends": "eslint:recommended",
     "globals": {
         "Atomics": "readonly",
@@ -104,7 +107,13 @@
         ],
         "max-classes-per-file": "error",
         "max-depth": "error",
-        "max-len": "off",
+        "max-len": [
+            "error",
+            {
+                "code": 120,
+                "ignoreComments": false
+            }
+        ],
         "max-lines": "error",
         "max-lines-per-function": "off",
         "max-nested-callbacks": "error",
@@ -150,8 +159,8 @@
         "no-labels": "error",
         "no-lone-blocks": "error",
         "no-lonely-if": "error",
-        "no-loop-func": "error",
-        "no-magic-numbers": "off",
+        "no-loop-func": "warn",
+        "no-magic-numbers": "warn",
         "no-misleading-character-class": "error",
         "no-mixed-operators": "error",
         "no-mixed-requires": "error",

@@ -14,7 +14,8 @@ describe('task1 - find random product', () => {
             cy.log(product.url + '[ is selected](htttp://e.com)')
             //visit the page                  
             SearchPage.searchProduct(product.display_name)  //open search and type product name
-            SearchPage.getProductByUrl(product.url).should('exist')  // check if the product is in the results                
+            SearchPage.getProductByUrl(product.url)
+                .should('exist')  // check if the product is in the results                
         })
     })
 })

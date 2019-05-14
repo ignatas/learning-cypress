@@ -10,6 +10,8 @@
     "chance": "^1.0.18",
     "cypress": "^3.2.0",
     "eslint": "^5.16.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-cypress": "^2.2.1",
     "mocha": "^3.5.3",
     "mocha-allure-reporter": "^1.4.0"
   },

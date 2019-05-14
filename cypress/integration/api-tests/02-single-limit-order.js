@@ -1,7 +1,6 @@
-let apikey; // <-- User1 autorization token
-let limitOrderId;
-let sellLimitOrder;
-let retryDuration = 0;
+let apikey // <-- User1 autorization token
+let limitOrderId
+let sellLimitOrder
 
 before('successfully LimitOrderads', function () {
     cy.isAlive()//is service alive at all?

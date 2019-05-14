@@ -76,7 +76,7 @@ Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
             retryDuration = retryDuration + parseInt(order.duration);
             if (retryDuration < 3000) {
                 if (order.status === 404) {
-                    console.log(retryDuration)
+                    cy.log('Duration time =' + retryDuration)
                     cy.getOrderById(apikey, limitOrderId)
                 }
                 else {
