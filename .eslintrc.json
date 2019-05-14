@@ -5,7 +5,8 @@
         "node": true
     },
     "plugins": [
-        "cypress"
+        "cypress",
+        "chai-friendly"
     ],
     "extends": "eslint:recommended",
     "globals": {
