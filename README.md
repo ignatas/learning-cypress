@@ -1,5 +1,5 @@
 ## Preparations
-This project was created using nodejs version 8.11.1.
+This project was created using nodejs version 10.15.3.
 In case of issues with launching test-cases check installed nodejs version.
 
 ## Download
