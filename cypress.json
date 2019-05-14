@@ -1,15 +1,17 @@
 {
-    "baseUrl": "https://hft-api-test.lykkex.net/api/",
-    "env": {
-        "wait": 3000
-        "login": "admin",
-        "password": "admin"
-    },
-    "reporter": "mocha-allure-reporter",
-    "reporterOptions": {
-        "mochaFile": "/results/test-output.xml",
-        "toConsole": true
-        
-      }
+  "baseUrl": "https://hft-api-test.lykkex.net/api/",
+  "projectId": "gkq9kk",
+  "env": {
+    "wait": 3000,
+    "login": "admin",
+    "password": "admin",
+    "storeUrl": "https://store.google.com/us",
+    "productsUrl": "https://storage.googleapis.com/mannequin/2018/data/productwall/accessories/en_us.json"
+  },
+  "defaultCommandTimeout": 30000,
+  "reporter": "mocha-allure-reporter",
+  "reporterOptions": {
+    "mochaFile": "/results/test-output.xml",
+    "toConsole": true
+  }
 }
-

@@ -24,10 +24,10 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 Cypress.Commands.add('isAlive', () => {
-    return cy.request('/isAlive').then((alive) => { 
+    return cy.request('/isAlive').then((alive) => {
         expect(alive.status).to.eq(200)
         expect(alive.body).to.have.property('isDebug').eq(false)
-     }) 
+    })
 })
 
 Cypress.Commands.add('killAllOrders', (apikey) => {
@@ -76,14 +76,13 @@ Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
             retryDuration = retryDuration + parseInt(order.duration);
             if (retryDuration < 3000) {
                 if (order.status === 404) {
-                    console.log(retryDuration)
+                    cy.log('Duration time =' + retryDuration)
                     cy.getOrderById(apikey, limitOrderId)
                 }
                 else {
-                    //cy.writeFile('/cypress/fixtures/getOrderByIdResponse.json', ordersbyid) <-- no need to use
+                    // cy.writeFile('/cypress/fixtures/getOrderByIdResponse.json', ordersbyid) <-- no need to use
                 }
             }
             else { expect(retryDuration).to.be.lessThan(3000) }
-
         })
 })
