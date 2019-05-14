@@ -16,7 +16,7 @@ class ProductPage extends BasePage {
             .find('span[class="is-price"]')// find element with product price
             .should('exist')
             .then((price) => {
-                //formating price to the number
+                // formating price to the number
                 return price.text().substring(1, price.text().length + 1).replace(',', '')
             })
     }
@@ -29,7 +29,7 @@ class ProductPage extends BasePage {
 
     addProductToCart(product, color) {
         this.clickBuy()
-        if (product.colors.length > 1) //additional steps for multiple colors
+        if (product.colors.length > 1) // additional steps for multiple colors
         {
             cy.log('Product with color selection')
             this.selectProductColor(color)

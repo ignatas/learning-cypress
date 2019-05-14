@@ -35,7 +35,7 @@ class CartPage extends BasePage {
             .find('div[class="cart-price-bottom-padding text-right"]')
             .should('exist')
             .then((price) => {
-                //formating price to the number
+                // formating price to the number
                 return price.text().substring(1, price.text().indexOf('.') + 3).replace(',', '')
             })
     }
@@ -64,7 +64,7 @@ class CartPage extends BasePage {
         return this.subtotal
             .should('exist')
             .then((price) => {
-                //formating price to the number
+                // formating price to the number
                 return price.text().substring(1, price.text().indexOf('.') + 3).replace(',', '')
             })
     }
@@ -73,7 +73,7 @@ class CartPage extends BasePage {
         this.openCartPage()
         this.getProductRowByUrl(url)
             .find('button[class="cart-remove-button pull-right"]')
-            .click()//remove product from the cart
+            .click()// remove product from the cart
         cy.get('div[class="your-cart-is-empty"]')
             .should('exist')
     }

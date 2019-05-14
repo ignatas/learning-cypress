@@ -80,7 +80,7 @@ Cypress.Commands.add('getOrderById', (apikey, limitOrderId) => {
                     cy.getOrderById(apikey, limitOrderId)
                 }
                 else {
-                    //cy.writeFile('/cypress/fixtures/getOrderByIdResponse.json', ordersbyid) <-- no need to use
+                    // cy.writeFile('/cypress/fixtures/getOrderByIdResponse.json', ordersbyid) <-- no need to use
                 }
             }
             else { expect(retryDuration).to.be.lessThan(3000) }

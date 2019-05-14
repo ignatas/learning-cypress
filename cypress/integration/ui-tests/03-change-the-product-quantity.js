@@ -10,20 +10,20 @@ describe('task3 - change product quantity in the cart', () => {
 
         cy.getProductsList().then(products => {
             products = products.filter(product => (product.images.length == 1))
-            product = products[0] //Chance().pickone(products) // - hardcoded to 100% pass
+            product = products[0] // Chance().pickone(products) // - hardcoded to 100% pass
             cy.log(`[${product.url} + is selected](http://e.com)`)
-            SearchPage.openSearchResults(product.display_name) //jet search results by api directly
+            SearchPage.openSearchResults(product.display_name) // jet search results by api directly
             // check if the product is in the results and pick the product
             SearchPage.pickProductFromSearchResultsByUrl(product.url)
         })
-        //add product to the cart
+        // add product to the cart
         ProductPage.clickBuy()
     })
 
     it('positive : product qnt change', () => {
 
         cy.log(`[GIVEN : ${product.display_name} - product is added to the cart](http:/e.com)`)
-        //check : only one item in the cart
+        // check : only one item in the cart
         CartPage.getItemQuantityDropdown(product.url).should('exist')
         CartPage.getProductQuantity(product.url).then((quantity) => { expect(quantity).to.eq("1") })
 
@@ -32,7 +32,7 @@ describe('task3 - change product quantity in the cart', () => {
 
             let productQuantity = Chance().integer({ min: 1, max: maxQuantity })
             cy.log(`[quantity selected as ${productQuantity} from ${maxQuantity}](http://e.com)`)
-            CartPage.setProductQuantity(product.url, productQuantity)//change qty
+            CartPage.setProductQuantity(product.url, productQuantity)// change qty
 
             cy.log('[THEN : Total price is changed as product_price * product_quantity](http:/e.com)')
             CartPage.openCartPage()
@@ -48,7 +48,7 @@ describe('task3 - change product quantity in the cart', () => {
     })
 
     after('cleaning', () => {
-        //clear the cart for new test
+        // clear the cart for new test
         CartPage.removeProduct(product.url)
     })
 })
