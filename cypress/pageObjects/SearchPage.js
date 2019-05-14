@@ -11,7 +11,7 @@ class SearchPage extends BasePage {
             .parent()
             .click()
     }
-    
+
     openSearchResults(display_name) {
         cy.visit(`${this.storeUrl}/search?q=${display_name}&hl=en-US`)
     }

@@ -33,7 +33,11 @@ class CartPage extends BasePage {
     getProductPrice(url) {
         return this.getProductRowByUrl(url)
             .find('div[class="cart-price-bottom-padding text-right"]')
-            .invoke('text')
+            .should('exist')
+            .then((price) => {
+                //formating price to the number
+                return price.text().substring(1, price.text().indexOf('.') + 3).replace(',', '')
+            })
     }
 
     getProductQuantity(url) {
@@ -41,6 +45,13 @@ class CartPage extends BasePage {
             .find('div[class="item-quantity cart-price-bottom-padding"]')
             .find('option[selected="true"]')
             .invoke('text')
+    }
+
+    getMaxProductQuantity(url) {
+        return this.getItemQuantityDropdown(url)
+            .then(dropdown => {
+                return dropdown[0].length
+            })
     }
 
     setProductQuantity(url, quantity) {
@@ -51,7 +62,11 @@ class CartPage extends BasePage {
     getTotalPrice() {
         this.checkOutButton.should('be.visible')
         return this.subtotal
-            .invoke('text')
+        .should('exist')
+        .then((price) => {
+            //formating price to the number
+            return price.text().substring(1, price.text().indexOf('.') + 3).replace(',', '')
+        })
     }
 
     removeProduct(url) {

@@ -34,7 +34,8 @@ describe('task2 - add product to cart', () => {
                     //buy the product
                     ProductPage.addProductToCart(product, color)
                     cy.log('check: the color is correct')
-                    CartPage.getProductTitle(product.url).contains(color).should('exist')//check: the color is correct
+                    //check: the color is correct
+                    CartPage.getProductTitle(product.url).contains(color).should('exist')
 
                     cy.log('[THEN : The product is added to the cart](http://e.com)')
                     cy.log('check : the product price is correct')
